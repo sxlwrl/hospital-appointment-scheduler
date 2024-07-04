@@ -1,12 +1,22 @@
 # Hospital Appointment Scheduler API
 
 ## 📋 Content
-1. Project Description
-2. Technical requirements
-3. Base URL
-4. API Documentation
-5. How to install and run the project
-6. How to dockerize the project
+
+<ol type="1">
+  <li>Project Description</li>
+  <li>Technical requirements</li>
+  <li>Base URL</li>
+  <li>API Documentation
+    <ul>
+      <li>/api/v1/register</li>
+      <li>/api/v1/login</li>
+      <li>test</li>
+      <li>test</li>
+    </ul>
+  </li>
+  <li>How to install and run the project</li>
+  <li>How to dockerize the project</li>
+</ol>
 
 ## ✏️ Project Description
 
