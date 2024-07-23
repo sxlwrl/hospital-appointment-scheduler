@@ -32,6 +32,8 @@
 
 `localhost:80`
 
+## 🗄️ Database Schema
+
 ## ℹ️ API Documentation
 
 ## 🚀 How to install and run the project
