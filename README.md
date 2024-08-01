@@ -4,7 +4,7 @@
 
 <ol type="1">
   <li>Project Description</li>
-  <li>Technical requirements</li>
+  <li>Technical Requirements</li>
   <li>Base URL</li>
   <li>API Documentation
     <ul>
@@ -14,13 +14,13 @@
       <li>test</li>
     </ul>
   </li>
-  <li>How to install and run the project</li>
-  <li>How to dockerize the project</li>
+  <li>How To Install And Run The Project</li>
+  <li>How To Dockerize The Project</li>
 </ol>
 
 ## ✏️ Project Description
 
-## ✔️ Technical requirements
+## ✔️ Technical Requirements
 
 * **Programming languages**: <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
 * **Frameworks**: <img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white"/>
@@ -32,7 +32,7 @@
 
 `localhost:80`
 
-## 🗄️ Database Schema
+## 🗄️ Database Documentation
 
 <img style="width: 625px" src="https://github.com/user-attachments/assets/f8c4868e-95ce-4a95-8d92-006794cfd244"/>
 
@@ -115,10 +115,260 @@
   </tr>
 </table>
 
+</br>
 
+<table>
+  <tr>
+    <td colspan="8"><strong>specializations</strong></td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>Type</td>
+    <td>PK</td>
+    <td>FK</td>
+    <td>NN</td>
+    <td>UQ</td>
+    <td>Default</td>
+    <td>Attributes</td>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td>serial</td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>title</td>
+    <td>varchar(50)</td>
+    <td></td>
+    <td></td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+</br>
+
+<table>
+  <tr>
+    <td colspan="8"><strong>doctors</strong></td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>Type</td>
+    <td>PK</td>
+    <td>FK</td>
+    <td>NN</td>
+    <td>UQ</td>
+    <td>Default</td>
+    <td>Attributes</td>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td>serial</td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>first_name</td>
+    <td>varchar(50)</td>
+    <td></td>
+    <td></td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>last_name</td>
+    <td>varchar(50)</td>
+    <td></td>
+    <td></td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>specialization_id</td>
+    <td>integer</td>
+    <td></td>
+    <td>✔️</td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+</br>
+
+<table>
+  <tr>
+    <td colspan="8"><strong>appointments</strong></td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>Type</td>
+    <td>PK</td>
+    <td>FK</td>
+    <td>NN</td>
+    <td>UQ</td>
+    <td>Default</td>
+    <td>Attributes</td>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td>serial</td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>patient_id</td>
+    <td>integer</td>
+    <td></td>
+    <td>✔️</td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>doctor_id</td>
+    <td>integer</td>
+    <td></td>
+    <td>✔️</td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>specialization_id</td>
+    <td>integer</td>
+    <td></td>
+    <td>✔️</td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>appointment_date</td>
+    <td>date</td>
+    <td></td>
+    <td></td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>appointment_time</td>
+    <td>time</td>
+    <td></td>
+    <td></td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>duration</td>
+    <td>integer</td>
+    <td></td>
+    <td></td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+</br>
+
+<table>
+  <tr>
+    <td colspan="8"><strong>availability</strong></td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>Type</td>
+    <td>PK</td>
+    <td>FK</td>
+    <td>NN</td>
+    <td>UQ</td>
+    <td>Default</td>
+    <td>Attributes</td>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td>serial</td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>doctor_id</td>
+    <td>integer</td>
+    <td></td>
+    <td>✔️</td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>available_date</td>
+    <td>date</td>
+    <td></td>
+    <td></td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>available_time</td>
+    <td>time</td>
+    <td></td>
+    <td></td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>duration</td>
+    <td>integer</td>
+    <td></td>
+    <td></td>
+    <td>✔️</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
 
 ## ℹ️ API Documentation
 
-## 🚀 How to install and run the project
+## 🚀 How To Install And Run The Project
 
-## 🐋 How to dockerize the project
+## 🐋 How To Dockerize The Project
