@@ -367,6 +367,41 @@
   </tr>
 </table>
 
+
+### Relationships
+
+</br>
+
+**Specializations -> Doctors (1:N)**
+
+*One specialization can belong to many doctors*
+
+</br>
+
+**Appointments -> Patients (N:1)**
+
+*Many appointments can belong to one patient*
+
+</br>
+
+**Appointments -> Doctors (N:1)**
+
+*Many appointments can belong to one doctor*
+
+</br>
+
+**Appointments -> Specializations (N:1)**
+
+*Many appointments can belong to one specialization*
+
+</br>
+
+**Doctors -> Availability (1:N)**
+
+*One doctor can have many availability records*
+
+</br>
+
 ## ℹ️ API Documentation
 
 ## 🚀 How To Install And Run The Project
