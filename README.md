@@ -34,8 +34,9 @@
 
 ## 🗄️ Database Schema
 
-![Untitled Diagram drawio (2)](https://github.com/user-attachments/assets/f8c4868e-95ce-4a95-8d92-006794cfd244)
+<img style="width: 625px" src="https://github.com/user-attachments/assets/f8c4868e-95ce-4a95-8d92-006794cfd244"/>
 
+</br>
 </br>
 
 <table>
@@ -55,7 +56,7 @@
   <tr>
     <td>id</td>
     <td>serial</td>
-    <td>Yes</td>
+    <td>✔️</td>
     <td></td>
     <td></td>
     <td></td>
@@ -67,8 +68,8 @@
     <td>varchar(50)</td>
     <td></td>
     <td></td>
-    <td>Yes</td>
-    <td>Yes</td>
+    <td>✔️</td>
+    <td>✔️</td>
     <td></td>
     <td></td>
   </tr>
@@ -77,7 +78,7 @@
     <td>varchar(50)</td>
     <td></td>
     <td></td>
-    <td>Yes</td>
+    <td>✔️</td>
     <td></td>
     <td></td>
     <td></td>
@@ -87,7 +88,7 @@
     <td>varchar(50)</td>
     <td></td>
     <td></td>
-    <td>Yes</td>
+    <td>✔️</td>
     <td></td>
     <td></td>
     <td></td>
@@ -97,8 +98,8 @@
     <td>varchar(100)</td>
     <td></td>
     <td></td>
-    <td>Yes</td>
-    <td>Yes</td>
+    <td>✔️</td>
+    <td>✔️</td>
     <td></td>
     <td></td>
   </tr>
@@ -107,7 +108,7 @@
     <td>varchar(250)</td>
     <td></td>
     <td></td>
-    <td>Yes</td>
+    <td>✔️</td>
     <td></td>
     <td></td>
     <td></td>
