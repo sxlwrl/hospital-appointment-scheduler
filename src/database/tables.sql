@@ -19,7 +19,7 @@ CREATE TABLE Doctors
     id                SERIAL PRIMARY KEY,
     first_name        VARCHAR(50) NOT NULL,
     last_name         VARCHAR(50) NOT NULL,
-    specialization_id INT,
+    specialization_id INT NOT NULL,
     FOREIGN KEY (specialization_id) REFERENCES Specializations(id) ON DELETE SET NULL
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE Appointments
 CREATE TABLE Availability
 (
     id             SERIAL PRIMARY KEY,
-    doctor_id      INT,
+    doctor_id      INT NOT NULL,
     available_date DATE NOT NULL,
     available_time TIME NOT NULL,
     duration       INT  NOT NULL,
