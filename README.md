@@ -34,6 +34,8 @@
 
 ## 🗄️ Database Schema
 
+![Untitled Diagram drawio (2)](https://github.com/user-attachments/assets/f8c4868e-95ce-4a95-8d92-006794cfd244)
+
 ## ℹ️ API Documentation
 
 ## 🚀 How to install and run the project
