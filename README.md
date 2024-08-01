@@ -36,6 +36,86 @@
 
 ![Untitled Diagram drawio (2)](https://github.com/user-attachments/assets/f8c4868e-95ce-4a95-8d92-006794cfd244)
 
+</br>
+
+<table>
+  <tr>
+    <td colspan="8"><strong>patients</strong></td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>Type</td>
+    <td>PK</td>
+    <td>FK</td>
+    <td>NN</td>
+    <td>UQ</td>
+    <td>Default</td>
+    <td>Attributes</td>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td>serial</td>
+    <td>Yes</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>username</td>
+    <td>varchar(50)</td>
+    <td></td>
+    <td></td>
+    <td>Yes</td>
+    <td>Yes</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>first_name</td>
+    <td>varchar(50)</td>
+    <td></td>
+    <td></td>
+    <td>Yes</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>last_name</td>
+    <td>varchar(50)</td>
+    <td></td>
+    <td></td>
+    <td>Yes</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>email</td>
+    <td>varchar(100)</td>
+    <td></td>
+    <td></td>
+    <td>Yes</td>
+    <td>Yes</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>password_hash</td>
+    <td>varchar(250)</td>
+    <td></td>
+    <td></td>
+    <td>Yes</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+
+
 ## ℹ️ API Documentation
 
 ## 🚀 How to install and run the project
