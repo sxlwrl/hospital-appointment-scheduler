@@ -6,6 +6,7 @@
   <li>Project Description</li>
   <li>Technical Requirements</li>
   <li>Base URL</li>
+  <li>Database Documentation</li>
   <li>API Documentation
     <ul>
       <li>/api/v1/register</li>
@@ -366,9 +367,6 @@
     <td></td>
   </tr>
 </table>
-
-
-### Relationships
 
 </br>
 
