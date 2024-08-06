@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { json } from 'body-parser';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import { join } from 'path';
 
 import { AuthRouter } from './api/auth/auth.router';
@@ -11,6 +12,7 @@ dotenv.config({ path: join(__dirname, '../.env') });
 const app = express();
 
 app.use(json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
 const pool = new Pool({
