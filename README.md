@@ -19,7 +19,11 @@
   <li>How To Dockerize The Project</li>
 </ol>
 
+</br>
+
 ## ✏️ Project Description
+
+</br>
 
 ## ✔️ Technical Requirements
 
@@ -29,9 +33,13 @@
 * **Package manager**: <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white"/>
 * **Other technologies**: <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white"/> 
 
+</br>
+
 ## 🔗 Base URL
 
-`localhost:80`
+`http://localhost:80`
+
+</br>
 
 ## 🗄️ Database Documentation
 
@@ -401,6 +409,14 @@
 </br>
 
 ## ℹ️ API Documentation
+
+#### 1. `/api/v1/auth/register`
+
+#### 2. `/api/v1/auth/login`
+
+#### 3. `/api/v1/auth/refresh`
+
+</br>
 
 ## 🚀 How To Install And Run The Project
 
