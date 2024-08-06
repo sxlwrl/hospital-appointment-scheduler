@@ -71,7 +71,10 @@ export class AuthController {
     }
   }
 
-  async refreshToken(req: Request, res: Response): Promise<Response | undefined> {
+  async refreshToken(
+    req: Request,
+    res: Response,
+  ): Promise<Response | undefined> {
     const { refreshToken } = req.cookies;
 
     try {
