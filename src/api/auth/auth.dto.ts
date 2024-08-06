@@ -50,4 +50,19 @@ export class RegisterDto {
  * DTO for patient login
  */
 
-export class LoginDto {}
+export class LoginDto {
+  @IsNotEmpty()
+  @IsString()
+  @Length(5, 50)
+  username: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Length(5, 250)
+  password: string;
+
+  constructor({ username, password }: Record<string, string>) {
+    this.username = username;
+    this.password = password;
+  }
+}
