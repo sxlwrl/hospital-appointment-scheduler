@@ -1,3 +1,7 @@
+/**
+ * Patient model
+ */
+
 export class Patient {
   constructor(
     public id: number,
