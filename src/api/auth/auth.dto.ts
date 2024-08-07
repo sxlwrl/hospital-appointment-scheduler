@@ -1,34 +1,45 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 /**
  * DTO for patient registration
  */
 
 export class RegisterDto {
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 50)
+  @IsNotEmpty({ message: 'Username cannot be empty' })
+  @IsString({ message: 'Username must be of string type' })
+  @MinLength(5, { message: 'Min length is 5' })
+  @MaxLength(50, { message: 'Max length is 50' })
   username: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 50)
+  @IsNotEmpty({ message: 'First name cannot be empty' })
+  @IsString({ message: 'First name must be of string type' })
+  @MinLength(5, { message: 'Min length is 5' })
+  @MaxLength(50, { message: 'Max length is 50' })
   firstName: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 50)
+  @IsNotEmpty({ message: 'Last name cannot be empty' })
+  @IsString({ message: 'Last name must be of string type' })
+  @MinLength(5, { message: 'Min length is 5' })
+  @MaxLength(50, { message: 'Max length is 50' })
   lastName: string;
 
   @IsEmail()
-  @IsNotEmpty()
-  @IsString()
-  @Length(10, 100)
+  @IsNotEmpty({ message: 'Email cannot be empty' })
+  @IsString({ message: 'Email must be of string type' })
+  @MinLength(10, { message: 'Min length is 1' })
+  @MaxLength(100, { message: 'Max length is 100' })
   email: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 250)
+  @IsNotEmpty({ message: 'Password cannot be empty' })
+  @IsString({ message: 'Password must be of string type' })
+  @MinLength(5, { message: 'Min length is 5' })
+  @MaxLength(250, { message: 'Max length is 250' })
   password: string;
 
   constructor({
@@ -51,14 +62,16 @@ export class RegisterDto {
  */
 
 export class LoginDto {
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 50)
+  @IsNotEmpty({ message: 'Username cannot be empty' })
+  @IsString({ message: 'Username must be of string type' })
+  @MinLength(5, { message: 'Min length is 5' })
+  @MaxLength(50, { message: 'Max length is 50' })
   username: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 250)
+  @IsNotEmpty({ message: 'Password cannot be empty' })
+  @IsString({ message: 'Password must be of string type' })
+  @MinLength(5, { message: 'Min length is 5' })
+  @MaxLength(250, { message: 'Max length is 250' })
   password: string;
 
   constructor({ username, password }: Record<string, string>) {
