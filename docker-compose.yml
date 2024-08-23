@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    env_file: ./.env
+    environment:
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DATABASE
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./.docker/postgres/tables.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - hospital_scheduler_net
+  app:
+    build: .
+    ports:
+      - "80:80"
+    networks:
+      - hospital_scheduler_net
+
+networks:
+  hospital_scheduler_net:
+    driver: bridge
+
+volumes:
+  db_data:
