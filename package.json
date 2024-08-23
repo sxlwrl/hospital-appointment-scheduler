@@ -5,9 +5,8 @@
   "author": "sxlwrl <vadymkazak2019@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "",
-    "start:dev": "ts-node src/app.ts",
-    "start:debug": "",
+    "start": "node dist/bin/www/server.js",
+    "start:dev": "ts-node src/bin/www/server.ts",
     "build": "tsc -b",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\""
