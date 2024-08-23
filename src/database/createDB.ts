@@ -12,7 +12,7 @@ const baseConfig = {
   user: process.env.DB_USER,
   host: process.env.HOST,
   password: process.env.DB_PASSWORD,
-  port: Number.parseInt(process.env.DB_PORT, 10),
+  port: parseInt(process.env.DB_PORT || '5432', 10),
 };
 
 const initialConfig = {
