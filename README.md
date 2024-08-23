@@ -421,3 +421,29 @@
 ## 🚀 How To Install And Run The Project
 
 ## 🐋 How To Dockerize The Project
+
+You need to have docker installed on your operating system to dockerize your project.
+
+</br>
+
+To build your service, run the following command
+
+**`docker compose build`**
+
+</br>
+
+To build create and run your container, run the next command
+
+**`docker compose up`**
+
+</br>
+
+Or just use *--build* option
+
+**`docker compose up --build`**
+
+</br>
+
+To stop your container use
+
+**`docker compose down`**
