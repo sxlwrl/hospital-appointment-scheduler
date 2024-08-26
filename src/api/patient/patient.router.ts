@@ -18,19 +18,19 @@ export class PatientRouter {
 
   private initializeRoutes(): void {
     this.router.get(
-      '/patients/:id',
+      '/:id',
       this.patientController.getById.bind(this.patientController),
     );
     this.router.get(
-      '/patients',
+      '/',
       this.patientController.getAll.bind(this.patientController),
     );
     this.router.patch(
-      '/patients/:id',
+      '/:id',
       this.patientController.update.bind(this.patientController),
     );
     this.router.delete(
-      '/patients/:id',
+      '/:id',
       this.patientController.delete.bind(this.patientController),
     );
   }
