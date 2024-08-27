@@ -35,7 +35,7 @@ export function isAuthenticated(
  */
 
 export function canModify(req: Request, res: Response, next: NextFunction) {
-  const userId = (req as any).user?.id;
+  const userId = (req as any).user?.userId;
   const paramId = parseInt(req.params.id, 10);
 
   if (userId !== paramId) {
