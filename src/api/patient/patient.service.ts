@@ -3,6 +3,7 @@ import { UpdatePatientDto } from './patient.dto';
 import { join } from 'path';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import { NotFoundError } from '../../errors/NotFound.error';
 
 dotenv.config({ path: join(__dirname, '../../../.env') });
 
@@ -17,7 +18,7 @@ export class PatientService {
     const patient = await this.patientRepository.findById(id);
 
     if (!patient) {
-      throw new Error('Patient with described id doesnt exist');
+      throw new NotFoundError('patient');
     }
 
     return patient;
