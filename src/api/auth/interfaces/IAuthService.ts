@@ -6,7 +6,7 @@ import { Patient } from '../../patient/patient.model';
  */
 
 export interface IAuthService {
-  register(data: RegisterDto): Promise<Patient | null>;
+  register(data: RegisterDto): Promise<Patient>;
   login(data: LoginDto): Promise<Record<string, string>>;
   refreshToken(refreshToken: string): Promise<string>;
 }
