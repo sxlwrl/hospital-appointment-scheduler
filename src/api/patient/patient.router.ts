@@ -3,6 +3,7 @@ import { Pool } from 'pg';
 import { PatientService } from './patient.service';
 import { PatientRepository } from './patient.repository';
 import { PatientController } from './patient.controller';
+import { canModify, isAuthenticated } from '../../middlewares/auth.middleware';
 
 export class PatientRouter {
   public router: Router;
@@ -17,20 +18,45 @@ export class PatientRouter {
   }
 
   private initializeRoutes(): void {
+    /**
+     * Get By ID
+     */
+
     this.router.get(
       '/:id',
+      isAuthenticated,
       this.patientController.getById.bind(this.patientController),
     );
+
+    /**
+     * Get All
+     */
+
     this.router.get(
       '/',
+      isAuthenticated,
       this.patientController.getAll.bind(this.patientController),
     );
+
+    /**
+     * Update
+     */
+
     this.router.patch(
       '/:id',
+      isAuthenticated,
+      canModify,
       this.patientController.update.bind(this.patientController),
     );
+
+    /**
+     * Delete
+     */
+
     this.router.delete(
       '/:id',
+      isAuthenticated,
+      canModify,
       this.patientController.delete.bind(this.patientController),
     );
   }
