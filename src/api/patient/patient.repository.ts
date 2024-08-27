@@ -17,6 +17,12 @@ export class PatientRepository {
     return this.findByData('email', email);
   }
 
+  async findAll(): Promise<Patient[]> {
+    const query = `SELECT * FROM patients`;
+    const queryResult = await this.executeQuery(query);
+    return queryResult.rows.map(this.mapToPatient);
+  }
+
   async create(data: CreatePatientDto): Promise<Patient> {
     const query = `INSERT INTO patients (username, first_name, last_name, email, password_hash) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
     const values = [
@@ -27,31 +33,66 @@ export class PatientRepository {
       data.password,
     ];
 
-    const queryResult = await this.executeQuery(query, values);
-    return this.mapToPatient(queryResult.rows[0]);
+    const result = await this.executeQuery(query, values);
+    return this.mapToPatient(result.rows[0]);
   }
 
-  // async update(data: UpdatePatientDto): Promise<Patient> {}
+  async update(id: number, data: UpdatePatientDto): Promise<Patient> {
+    const fields = [];
+    const values = [];
 
-  // async delete(id: number): Promise<void> {}
+    if (data.username) {
+      fields.push('username = $' + (fields.length + 1));
+      values.push(data.username);
+    }
+    if (data.firstName) {
+      fields.push('first_name = $' + (fields.length + 1));
+      values.push(data.firstName);
+    }
+    if (data.lastName) {
+      fields.push('last_name = $' + (fields.length + 1));
+      values.push(data.lastName);
+    }
+    if (data.email) {
+      fields.push('email = $' + (fields.length + 1));
+      values.push(data.email);
+    }
+    if (data.password) {
+      fields.push('password_hash = $' + (fields.length + 1));
+      values.push(data.password);
+    }
+
+    if (fields.length === 0) {
+      throw new Error('No fields to update');
+    }
+
+    const query = `UPDATE patients SET ${fields.join(', ')} WHERE id = ${id} RETURNING *`;
+
+    const result = await this.executeQuery(query, values);
+    return this.mapToPatient(result.rows[0]);
+  }
+
+  async delete(id: number): Promise<void> {
+    const query = 'DELETE FROM patients WHERE id = $1';
+    await this.executeQuery(query, [id]);
+  }
 
   private async findByData(field: string, value: any): Promise<Patient | null> {
     const query = `SELECT * FROM patients WHERE ${field} = $1`;
-    const values = [value];
-    const result = await this.executeQuery(query, values);
+    const result = await this.executeQuery(query, [value]);
     return result.rowCount ? this.mapToPatient(result.rows[0]) : null;
   }
 
   private async executeQuery(
     query: string,
-    values: any[],
+    values?: any[],
   ): Promise<QueryResult> {
     try {
-      return await this.pool.query(query, values);
-    } catch (err) {
-      // TODO refactor this part
-      if (err instanceof Error) throw new Error(err.message);
-      else throw err;
+      return values
+        ? await this.pool.query(query, values)
+        : await this.pool.query(query);
+    } catch (error) {
+      throw new Error('Cannot execute query');
     }
   }
 
