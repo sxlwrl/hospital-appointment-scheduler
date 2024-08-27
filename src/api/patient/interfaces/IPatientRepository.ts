@@ -9,7 +9,7 @@ export interface IPatientRepository {
   findById(id: number): Promise<Patient | null>;
   findByUsername(username: string): Promise<Patient | null>;
   findByEmail(email: string): Promise<Patient | null>;
-  findAll(): Promise<Array<Patient>>;
+  findAll(): Promise<Patient[]>;
   create(data: CreatePatientDto): Promise<Patient>;
   update(id: number, data: UpdatePatientDto): Promise<Patient>;
   delete(id: number): Promise<void>;
