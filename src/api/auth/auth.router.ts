@@ -18,15 +18,15 @@ export class AuthRouter {
 
   private initializeRoutes(): void {
     this.router.post(
-      '/auth/register',
+      '/register',
       this.authController.register.bind(this.authController),
     );
     this.router.post(
-      '/auth/login',
+      '/login',
       this.authController.login.bind(this.authController),
     );
     this.router.post(
-      '/auth/refresh',
+      '/refresh',
       this.authController.refreshToken.bind(this.authController),
     );
   }

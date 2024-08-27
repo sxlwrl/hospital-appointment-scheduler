@@ -11,7 +11,6 @@ dotenv.config({ path: join(__dirname, '../../../.env') });
 
 const port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
-console.log(port);
 
 /**
  * Create HTTP server.
@@ -23,7 +22,10 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+const isDocker = process.env.IS_DOCKER === 'true';
+
+isDocker ? server.listen(port as number, 'app') : server.listen(port);
+
 server.on('error', onError);
 server.on('listening', onListening);
 

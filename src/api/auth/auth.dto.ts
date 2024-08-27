@@ -1,65 +1,22 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import {
+  UsernameValidation,
+  PasswordValidation,
+} from '../../utils/validationDecorators';
+import { CreatePatientDto } from '../patient/patient.dto';
 
 /**
  * DTO for patient registration
  */
 
-export class RegisterDto {
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 50)
-  username: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 50)
-  firstName: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 50)
-  lastName: string;
-
-  @IsEmail()
-  @IsNotEmpty()
-  @IsString()
-  @Length(10, 100)
-  email: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 250)
-  password: string;
-
-  constructor({
-    username,
-    firstName,
-    lastName,
-    email,
-    password,
-  }: Record<string, string>) {
-    this.username = username;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.password = password;
-  }
-}
+export class RegisterDto extends CreatePatientDto {}
 
 /**
  * DTO for patient login
  */
 
 export class LoginDto {
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 50)
-  username: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @Length(5, 250)
-  password: string;
+  @UsernameValidation() username: string;
+  @PasswordValidation() password: string;
 
   constructor({ username, password }: Record<string, string>) {
     this.username = username;

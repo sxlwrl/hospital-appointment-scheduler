@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { validate } from 'class-validator';
 import { IAuthService } from './interfaces/IAuthService';
+import { handleError } from '../../utils/handleError';
 
 /**
  * Auth controller
@@ -16,34 +17,35 @@ export class AuthController {
    * @param res - response
    */
 
-  async register(req: Request, res: Response): Promise<Response | undefined> {
+  async register(req: Request, res: Response): Promise<Response> {
     const registerDto = new RegisterDto(req.body);
-    Object.assign(registerDto, req.body);
 
     const errors = await validate(registerDto);
 
     if (errors.length > 0) {
-      return res.status(400).json(errors);
+      return res.status(400).json({ errors });
     }
 
     try {
       const patient = await this.authService.register(req.body);
       return res.status(201).json(patient);
     } catch (error) {
-      // TODO refactor this part
-      if (error instanceof Error)
-        return res.status(400).json({ message: error.message });
+      return handleError(res, error);
     }
   }
 
-  async login(req: Request, res: Response): Promise<Response | undefined> {
-    const loginDto = new LoginDto(req.body);
-    Object.assign(loginDto, req.body);
+  /**
+   * Login implementation
+   * @param req - request
+   * @param res - response
+   */
 
+  async login(req: Request, res: Response): Promise<Response> {
+    const loginDto = new LoginDto(req.body);
     const errors = await validate(loginDto);
 
     if (errors.length > 0) {
-      return res.status(400).json(errors);
+      return res.status(400).json({ errors });
     }
 
     try {
@@ -54,27 +56,28 @@ export class AuthController {
       res.cookie('accessToken', accessToken, {
         httpOnly: true,
         secure: true,
-        maxAge: 36000,
+        maxAge: 604800000,
       });
 
       res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
         secure: true,
-        maxAge: 432000000,
+        maxAge: 86000000,
       });
 
-      return res.status(200).json({ message: 'User logged in' });
+      return res.status(200).json({ message: 'Patient logged in' });
     } catch (error) {
-      // TODO refactor this part
-      if (error instanceof Error)
-        return res.status(400).json({ message: error.message });
+      return handleError(res, error);
     }
   }
 
-  async refreshToken(
-    req: Request,
-    res: Response,
-  ): Promise<Response | undefined> {
+  /**
+   * Refresh token implementation
+   * @param req - request
+   * @param res - response
+   */
+
+  async refreshToken(req: Request, res: Response): Promise<Response> {
     const { refreshToken } = req.cookies;
 
     try {
@@ -83,14 +86,12 @@ export class AuthController {
       res.cookie('refreshToken', newRefreshToken, {
         httpOnly: true,
         secure: true,
-        maxAge: 432000000,
+        maxAge: 86000000,
       });
 
       return res.status(200).json(newRefreshToken);
     } catch (error) {
-      // TODO refactor this part
-      if (error instanceof Error)
-        return res.status(400).json({ message: error.message });
+      return handleError(res, error);
     }
   }
 }

@@ -1,9 +1,14 @@
-import { LoginDto, RegisterDto } from './auth.dto';
-import { IPatientRepository } from '../patient/interfaces/IPatientRepository';
 import bcrypt from 'bcrypt';
-import { generateToken, verifyToken } from '../../utils/jwt';
 import dotenv from 'dotenv';
 import { join } from 'path';
+
+import { LoginDto, RegisterDto } from './auth.dto';
+import { IPatientRepository } from '../patient/interfaces/IPatientRepository';
+import { generateToken, verifyToken } from '../../utils/jwt';
+
+import { AlreadyExistsError } from '../../errors/AlreadyExists.error';
+import { NotFoundError } from '../../errors/NotFound.error';
+import { InvalidCredentialsError } from '../../errors/InvalidCredentials.error';
 
 dotenv.config({ path: join(__dirname, '../../../.env') });
 
@@ -27,11 +32,11 @@ export class AuthService {
     const isEmailTaken = await this.patientRepository.findByEmail(email);
 
     if (isUsernameTaken) {
-      throw new Error('User with this username already exists');
+      throw new AlreadyExistsError('user');
     }
 
     if (isEmailTaken) {
-      throw new Error('User with this email already exists');
+      throw new AlreadyExistsError('user');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -51,13 +56,13 @@ export class AuthService {
     const user = await this.patientRepository.findByUsername(username);
 
     if (!user) {
-      throw new Error('User with this username doesnt exist');
+      throw new NotFoundError('user');
     }
 
     const comparedPassword = await bcrypt.compare(password, user.passwordHash);
 
     if (!comparedPassword) {
-      throw new Error('Incorrect password');
+      throw new InvalidCredentialsError('password');
     }
 
     const accessToken = generateToken(
@@ -81,7 +86,7 @@ export class AuthService {
 
   async refreshToken(refreshToken: string) {
     if (!verifyToken(refreshToken)) {
-      throw new Error('Invalid refresh token');
+      throw new InvalidCredentialsError('token');
     }
 
     const payload = JSON.parse(
