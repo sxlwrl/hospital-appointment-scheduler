@@ -56,13 +56,13 @@ export class AuthController {
       res.cookie('accessToken', accessToken, {
         httpOnly: true,
         secure: true,
-        maxAge: 36000,
+        maxAge: 604800000,
       });
 
       res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
         secure: true,
-        maxAge: 432000000,
+        maxAge: 86000000,
       });
 
       return res.status(200).json({ message: 'Patient logged in' });
@@ -86,7 +86,7 @@ export class AuthController {
       res.cookie('refreshToken', newRefreshToken, {
         httpOnly: true,
         secure: true,
-        maxAge: 432000000,
+        maxAge: 86000000,
       });
 
       return res.status(200).json(newRefreshToken);
