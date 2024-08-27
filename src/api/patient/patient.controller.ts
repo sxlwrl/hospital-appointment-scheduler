@@ -25,7 +25,7 @@ export class PatientController {
       const patient = await this.patientService.findById(patientId);
       return res.status(200).json({ patient: patient });
     } catch (error) {
-      handleError(res, error);
+      return handleError(res, error);
     }
   }
 
@@ -40,7 +40,7 @@ export class PatientController {
       const patients = await this.patientService.findAll();
       return res.status(200).json({ patients: patients });
     } catch (error) {
-      handleError(res, error);
+      return handleError(res, error);
     }
   }
 
@@ -68,7 +68,7 @@ export class PatientController {
       );
       return res.status(200).json(updatedPatient);
     } catch (error) {
-      handleError(res, error);
+      return handleError(res, error);
     }
   }
 
@@ -85,7 +85,7 @@ export class PatientController {
       await this.patientService.deletePatient(patientId);
       return res.status(204).json({ message: 'Patient deleted' });
     } catch (error) {
-      handleError(res, error);
+      return handleError(res, error);
     }
   }
 }
