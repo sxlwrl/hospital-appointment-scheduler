@@ -18,7 +18,7 @@ export class PatientController {
    * @param res - response
    */
 
-  async getById(req: Request, res: Response) {
+  async getById(req: Request, res: Response): Promise<Response> {
     const patientId = parseInt(req.params.id, 10);
 
     try {
@@ -35,7 +35,7 @@ export class PatientController {
    * @param res - response
    */
 
-  async getAll(req: Request, res: Response) {
+  async getAll(req: Request, res: Response): Promise<Response> {
     try {
       const patients = await this.patientService.findAll();
       return res.status(200).json({ patients: patients });
@@ -50,7 +50,7 @@ export class PatientController {
    * @param res - response
    */
 
-  async update(req: Request, res: Response) {
+  async update(req: Request, res: Response): Promise<Response> {
     const patientId = parseInt(req.params.id, 10);
 
     const updatePatientDto = new UpdatePatientDto(req.body);
@@ -78,7 +78,7 @@ export class PatientController {
    * @param res - response
    */
 
-  async delete(req: Request, res: Response): Promise<Response | undefined> {
+  async delete(req: Request, res: Response): Promise<Response> {
     const patientId = parseInt(req.params.id, 10);
 
     try {
