@@ -8,7 +8,6 @@ import { handleError } from '../../utils/handleError';
  * Patient controller
  */
 
-
 export class PatientController {
   constructor(private readonly patientService: IPatientService) {}
 

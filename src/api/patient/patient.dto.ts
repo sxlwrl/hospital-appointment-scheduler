@@ -1,6 +1,4 @@
-import {
-  IsOptional,
-} from 'class-validator';
+import { IsOptional } from 'class-validator';
 
 import {
   EmailValidation,
