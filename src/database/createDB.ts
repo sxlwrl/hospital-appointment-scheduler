@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: join(__dirname, '../../.env') });
 
-const filePath = join(__dirname, 'tables.sql');
+const filePath = join(__dirname, '../../.docker/postgres/tables.sql');
 const script = readFileSync(filePath, 'utf8');
 
 const baseConfig = {
