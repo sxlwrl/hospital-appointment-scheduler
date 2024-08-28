@@ -52,3 +52,11 @@ export const PasswordValidation = () =>
     MinLength(5, { message: 'Min length is 5' }),
     MaxLength(250, { message: 'Max length is 250' }),
   );
+
+export const TitleValidation = () =>
+  combineDecorators(
+    IsNotEmpty({ message: 'Title cannot be empty' }),
+    IsString({ message: 'Title must be of string type' }),
+    MinLength(5, { message: 'Min length is 5' }),
+    MaxLength(50, { message: 'Max length is 50' }),
+  );
