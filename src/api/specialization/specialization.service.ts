@@ -46,6 +46,7 @@ export class SpecializationService {
   }
 
   async updateSpecialization(id: number, data: UpdateSpecializationDto) {
+    await this.findById(id);
     return await this.specializationRepository.update(id, data);
   }
 
