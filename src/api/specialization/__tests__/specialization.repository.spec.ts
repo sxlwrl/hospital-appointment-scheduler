@@ -14,12 +14,12 @@ jest.mock('pg', () => {
 });
 
 describe('SpecializationRepository', () => {
-  let repo: SpecializationRepository;
+  let repository: SpecializationRepository;
   let pool: jest.Mocked<Pool>;
 
   beforeEach(() => {
     pool = new Pool() as jest.Mocked<Pool>;
-    repo = new SpecializationRepository(pool);
+    repository = new SpecializationRepository(pool);
   });
 
   afterEach(() => {
@@ -34,7 +34,7 @@ describe('SpecializationRepository', () => {
         rows: [specialization],
       } as QueryResult);
 
-      const result = await repo.findById(1);
+      const result = await repository.findById(1);
 
       expect(pool.query).toHaveBeenCalledWith(
         'SELECT * FROM specializations WHERE id = $1',
@@ -52,7 +52,7 @@ describe('SpecializationRepository', () => {
         fields: [] as FieldDef[],
       } as QueryResult);
 
-      const result = await repo.findById(1);
+      const result = await repository.findById(1);
 
       expect(result).toBeNull();
     });
@@ -69,7 +69,7 @@ describe('SpecializationRepository', () => {
         fields: [] as FieldDef[],
       } as QueryResult);
 
-      const result = await repo.findByTitle('Surgery');
+      const result = await repository.findByTitle('Surgery');
 
       expect(pool.query).toHaveBeenCalledWith(
         'SELECT * FROM specializations WHERE title = $1',
@@ -87,7 +87,7 @@ describe('SpecializationRepository', () => {
         fields: [] as FieldDef[],
       } as QueryResult);
 
-      const result = await repo.findByTitle('Surgery');
+      const result = await repository.findByTitle('Surgery');
 
       expect(result).toBeNull();
     });
@@ -107,7 +107,7 @@ describe('SpecializationRepository', () => {
         fields: [] as FieldDef[],
       } as QueryResult);
 
-      const result = await repo.findAll();
+      const result = await repository.findAll();
 
       expect(pool.query).toHaveBeenCalledWith('SELECT * FROM specializations');
       expect(result).toEqual(specializations);
@@ -126,7 +126,7 @@ describe('SpecializationRepository', () => {
         fields: [] as FieldDef[],
       } as QueryResult);
 
-      const result = await repo.create(createDto);
+      const result = await repository.create(createDto);
 
       expect(pool.query).toHaveBeenCalledWith(
         'INSERT INTO specializations (title) VALUES ($1) RETURNING *',
@@ -147,7 +147,7 @@ describe('SpecializationRepository', () => {
         rows: [specialization],
       } as QueryResult);
 
-      const result = await repo.update(1, updateDto);
+      const result = await repository.update(1, updateDto);
 
       expect(pool.query).toHaveBeenCalledWith(
         'UPDATE specializations SET title = $1 WHERE id = 1 RETURNING *',
@@ -163,7 +163,7 @@ describe('SpecializationRepository', () => {
         rowCount: 1,
       } as QueryResult);
 
-      await repo.delete(1);
+      await repository.delete(1);
 
       expect(pool.query).toHaveBeenCalledWith(
         'DELETE FROM specializations WHERE id = $1',
