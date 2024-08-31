@@ -1,6 +1,7 @@
 import {
   IsEmail,
   IsNotEmpty,
+  IsNumber,
   IsString,
   MaxLength,
   MinLength,
@@ -59,4 +60,10 @@ export const TitleValidation = () =>
     IsString({ message: 'Title must be of string type' }),
     MinLength(5, { message: 'Min length is 5' }),
     MaxLength(50, { message: 'Max length is 50' }),
+  );
+
+export const IdValidation = () =>
+  combineDecorators(
+    IsNotEmpty({ message: 'ID cannot be empty' }),
+    IsNumber({}, { message: 'ID should be a number' }),
   );
