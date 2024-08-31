@@ -24,7 +24,15 @@ export class CreateDoctorDto implements Required<BaseDoctorDto> {
   @LastNameValidation() lastName: string;
   @IdValidation() specialization_id: number;
 
-  constructor({ firstName, lastName, specialization_id }) {
+  constructor({
+    firstName,
+    lastName,
+    specialization_id,
+  }: {
+    firstName: string;
+    lastName: string;
+    specialization_id: number;
+  }) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.specialization_id = specialization_id;
@@ -48,7 +56,15 @@ export class UpdateDoctorDto implements Partial<BaseDoctorDto> {
   @IsOptional()
   specialization_id: number;
 
-  constructor({ firstName, lastName, specialization_id }) {
+  constructor({
+    firstName,
+    lastName,
+    specialization_id,
+  }: {
+    firstName: string;
+    lastName: string;
+    specialization_id: number;
+  }) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.specialization_id = specialization_id;
