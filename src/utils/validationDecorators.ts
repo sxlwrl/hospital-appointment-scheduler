@@ -1,5 +1,6 @@
 import {
   IsEmail,
+  IsMilitaryTime,
   IsNotEmpty,
   IsNumber,
   IsString,
@@ -62,8 +63,17 @@ export const TitleValidation = () =>
     MaxLength(50, { message: 'Max length is 50' }),
   );
 
-export const IdValidation = () =>
+export const NumberValidation = () =>
   combineDecorators(
-    IsNotEmpty({ message: 'ID cannot be empty' }),
-    IsNumber({}, { message: 'ID should be a number' }),
+    IsNotEmpty({ message: 'Data cannot be empty' }),
+    IsNumber({}, { message: 'Data should be a number' }),
+  );
+
+export const DateValidation = () =>
+  combineDecorators(IsNotEmpty({ message: 'Data cannot be empty' }));
+
+export const TimeValidation = () =>
+  combineDecorators(
+    IsNotEmpty({ message: 'Data cannot be empty' }),
+    IsMilitaryTime({ message: 'Data should be a time' }),
   );
