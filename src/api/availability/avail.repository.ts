@@ -2,12 +2,19 @@ import { Pool } from 'pg';
 import { Availability } from './avail.model';
 import { CreateAvailDto, UpdateAvailDto } from './avail.dto';
 import { executeQuery } from '../../utils/executeQuery';
+import { findByData } from '../../utils/findByData';
 
 export class AvailRepository {
   constructor(private readonly pool: Pool) {}
 
   async findById(id: number): Promise<Availability | null> {
-    return this.findByData('id', id);
+    return findByData<Availability>(
+      this.pool,
+      'availability',
+      'id',
+      id,
+      this.mapToAvailability,
+    );
   }
 
   async findAll(): Promise<Availability[]> {
@@ -61,15 +68,6 @@ export class AvailRepository {
   async delete(id: number): Promise<void> {
     const query = 'DELETE FROM availability WHERE id = $1';
     await executeQuery(this.pool, query, [id]);
-  }
-
-  private async findByData(
-    field: string,
-    value: any,
-  ): Promise<Availability | null> {
-    const query = `SELECT * FROM availability WHERE ${field} = $1`;
-    const result = await executeQuery(this.pool, query, [value]);
-    return result.rowCount ? this.mapToAvailability(result.rows[0]) : null;
   }
 
   private mapToAvailability(row: any): Availability {

@@ -2,12 +2,13 @@ import { Pool } from 'pg';
 import { Doctor } from './doctor.model';
 import { CreateDoctorDto, UpdateDoctorDto } from './doctor.dto';
 import { executeQuery } from '../../utils/executeQuery';
+import { findByData } from '../../utils/findByData';
 
 export class DoctorRepository {
   constructor(private readonly pool: Pool) {}
 
   async findById(id: number): Promise<Doctor | null> {
-    return this.findByData('id', id);
+    return findByData(this.pool, 'doctors', 'id', id, this.mapToDoctor);
   }
 
   async findAll(): Promise<Doctor[]> {
@@ -56,11 +57,11 @@ export class DoctorRepository {
     await executeQuery(this.pool, query, [id]);
   }
 
-  private async findByData(field: string, value: any): Promise<Doctor | null> {
-    const query = `SELECT * FROM doctors WHERE ${field} = $1`;
-    const result = await executeQuery(this.pool, query, [value]);
-    return result.rowCount ? this.mapToDoctor(result.rows[0]) : null;
-  }
+  // private async findByData(field: string, value: any): Promise<Doctor | null> {
+  //   const query = `SELECT * FROM doctors WHERE ${field} = $1`;
+  //   const result = await executeQuery(this.pool, query, [value]);
+  //   return result.rowCount ? this.mapToDoctor(result.rows[0]) : null;
+  // }
 
   private mapToDoctor(row: any): Doctor {
     if (!row) throw new Error('Cannot map to doctor');

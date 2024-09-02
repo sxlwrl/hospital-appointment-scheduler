@@ -5,16 +5,29 @@ import {
   UpdateSpecializationDto,
 } from './specialization.dto';
 import { executeQuery } from '../../utils/executeQuery';
+import { findByData } from '../../utils/findByData';
 
 export class SpecializationRepository {
   constructor(private readonly pool: Pool) {}
 
   async findById(id: number): Promise<Specialization | null> {
-    return this.findByData('id', id);
+    return findByData(
+      this.pool,
+      'specializations',
+      'id',
+      id,
+      this.mapToSpecialization,
+    );
   }
 
   async findByTitle(title: string): Promise<Specialization | null> {
-    return this.findByData('title', title);
+    return findByData(
+      this.pool,
+      'specializations',
+      'title',
+      title,
+      this.mapToSpecialization,
+    );
   }
 
   async findAll(): Promise<Specialization[]> {
@@ -50,15 +63,6 @@ export class SpecializationRepository {
   async delete(id: number): Promise<void> {
     const query = 'DELETE FROM specializations WHERE id = $1';
     await executeQuery(this.pool, query, [id]);
-  }
-
-  private async findByData(
-    field: string,
-    value: any,
-  ): Promise<Specialization | null> {
-    const query = `SELECT * FROM specializations WHERE ${field} = $1`;
-    const result = await executeQuery(this.pool, query, [value]);
-    return result.rowCount ? this.mapToSpecialization(result.rows[0]) : null;
   }
 
   private mapToSpecialization(row: any): Specialization {

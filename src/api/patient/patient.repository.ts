@@ -1,21 +1,28 @@
-import { Pool} from 'pg';
+import { Pool } from 'pg';
 import { Patient } from './patient.model';
 import { CreatePatientDto, UpdatePatientDto } from './patient.dto';
 import { executeQuery } from '../../utils/executeQuery';
+import { findByData } from '../../utils/findByData';
 
 export class PatientRepository {
   constructor(private readonly pool: Pool) {}
 
   async findById(id: number): Promise<Patient | null> {
-    return this.findByData('id', id);
+    return findByData(this.pool, 'patients', 'id', id, this.mapToPatient);
   }
 
   async findByUsername(username: string): Promise<Patient | null> {
-    return this.findByData('username', username);
+    return findByData(
+      this.pool,
+      'patients',
+      'username',
+      username,
+      this.mapToPatient,
+    );
   }
 
   async findByEmail(email: string): Promise<Patient | null> {
-    return this.findByData('email', email);
+    return findByData(this.pool, 'patients', 'email', email, this.mapToPatient);
   }
 
   async findAll(): Promise<Patient[]> {
@@ -76,12 +83,6 @@ export class PatientRepository {
   async delete(id: number): Promise<void> {
     const query = 'DELETE FROM patients WHERE id = $1';
     await executeQuery(this.pool, query, [id]);
-  }
-
-  private async findByData(field: string, value: any): Promise<Patient | null> {
-    const query = `SELECT * FROM patients WHERE ${field} = $1`;
-    const result = await executeQuery(this.pool, query, [value]);
-    return result.rowCount ? this.mapToPatient(result.rows[0]) : null;
   }
 
   private mapToPatient(row: any): Patient {
