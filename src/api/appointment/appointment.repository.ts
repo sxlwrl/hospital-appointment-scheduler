@@ -2,12 +2,19 @@ import { Pool } from 'pg';
 import { Appointment } from './appointment.model';
 import { CreateAppointmentDto, UpdateAppointmentDto } from './appointment.dto';
 import { executeQuery } from '../../utils/executeQuery';
+import { findByData } from '../../utils/findByData';
 
 export class AppointmentRepository {
   constructor(private readonly pool: Pool) {}
 
   async findById(id: number): Promise<Appointment | null> {
-    return this.findByData('id', id);
+    return findByData<Appointment>(
+      this.pool,
+      'appointments',
+      'id',
+      id,
+      this.mapToAppointment,
+    );
   }
 
   async findAll(): Promise<Appointment[]> {
@@ -73,6 +80,7 @@ export class AppointmentRepository {
       fields.push('appointment_time = $' + (fields.length + 1));
       values.push(String(data.appointment_time));
     }
+
     if (data.duration) {
       fields.push('duration = $' + (fields.length + 1));
       values.push(String(data.duration));
@@ -87,15 +95,6 @@ export class AppointmentRepository {
   async delete(id: number): Promise<void> {
     const query = 'DELETE FROM appointments WHERE id = $1';
     await executeQuery(this.pool, query, [id]);
-  }
-
-  private async findByData(
-    field: string,
-    value: any,
-  ): Promise<Appointment | null> {
-    const query = `SELECT * FROM appointments WHERE ${field} = $1`;
-    const result = await executeQuery(this.pool, query, [value]);
-    return result.rowCount ? this.mapToAppointment(result.rows[0]) : null;
   }
 
   private mapToAppointment(row: any): Appointment {
