@@ -414,6 +414,33 @@
 
 #### 1. Endpoint `/api/v1/auth`:
 
+* **Endpoint `/api/v1/auth/login`**
+
+<table>
+  <tr>
+    <td colspan="5"><strong>patients</strong></td>
+  </tr>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>IsAuth</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+  </tr>
+</table>
+
 #### 2. Endpoint: `/api/v1/auth/patients`
 
 #### 3. Endpoint: `/api/v1/auth/specializations`
