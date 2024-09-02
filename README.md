@@ -418,8 +418,8 @@
   
   * The server should return a status of 201 if the registration was successful
   * The server should return a status of 400 if the registration was unsuccessful
-  * * The server should return a status of 409 if the patient already exists
-
+  * The server should return a status of 409 if the patient already exists
+</br>
 <table>
   <tr>
     <td>Parameter</td>
@@ -430,67 +430,126 @@
   <tr>
     <td><code>username</code></td>
     <td>string</td>
-    <td>true</td>
+    <td>✔️</td>
     <td>Username</td>
   </tr>
   <tr>
     <td><code>firstName</code></td>
     <td>string</td>
-    <td>true</td>
+    <td>✔️</td>
     <td>First Name</td>
   </tr>
   <tr>
     <td><code>lastName</code></td>
     <td>string</td>
-    <td>true</td>
+    <td>✔️</td>
     <td>Last Name</td>
   </tr>
   <tr>
     <td><code>email</code></td>
     <td>string</td>
-    <td>true</td>
+    <td>✔️</td>
     <td>Email</td>
   </tr>
   <tr>
     <td><code>password</code></td>
     <td>string</td>
-    <td>true</td>
+    <td>✔️</td>
     <td>Password</td>
   </tr>
 </table>
+</br>
 
-> Request
+**Request**
 
-> Response body 
 
+> curl -X 'POST' \\\ </br>
+'/register' \\\ </br>
+ { </br>
+  &emsp;"username": "username", </br>
+  &emsp;"firstName": "firstName", </br>
+  &emsp;"lastName": "lastName", </br>
+   &emsp;"email": "email", </br>
+   &emsp;"password": "password" </br>
+ } </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"username": "test", </br>
+    &emsp;"first_name": "test", </br>
+    &emsp;"last_name": "test", </br>
+    &emsp;"email": "test@gmail.com", </br>
+    &emsp;"password_hash": "$2b$10$wmuav.usLKBtL1KHKzfldudG8LiikrOMgm74d/H6lnJEa9I0oeIGq" </br>
+} </br>
 </br>
 
 * POST **Endpoint `/api/v1/auth/login`**
 
+  * The server should return a status of 200 if the login was successful
+  * The server should return a status of 400 if the registration was unsuccessful
+  * The server should return a status of 401 if the patient credentials are not correct
+</br>
 <table>
-  <tr>
-    <td colspan="5"><strong>patients</strong></td>
-  </tr>
   <tr>
     <td>Parameter</td>
     <td>Type</td>
     <td>Required</td>
-    <td>IsAuth</td>
     <td>Description</td>
   </tr>
   <tr>
+    <td><code>username</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Username</td>
   </tr>
   <tr>
-  </tr>
-  <tr>
-  </tr>
-  <tr>
-  </tr>
-  <tr>
-  </tr>
-  <tr>
+    <td><code>password</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Password</td>
   </tr>
 </table>
+</br>
+
+**Request**
+
+> curl -X 'POST' \\\ </br>
+'/login' \\\ </br>
+ { </br>
+  &emsp;"username": "username", </br>
+   &emsp;"password": "password" </br>
+ } </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"message": "Patient logged in", </br>
+    &emsp;"token": "token", </br>
+} </br>
+<br/>
+
+* POST **Endpoint `/api/v1/auth/refresh`**
+
+  Takes token from cookie and generates new tokens
+
+  * The server should return a status of 200 if the tokens were successfully generated
+  * The server should return a status of 400 if the generating was unsuccessful
+  * The server should return a status of 401 if the patient is not logged in
+</br>
+
+**Request**
+
+
+> curl -X 'POST' \\\ </br>
+'/refresh' \\\ </br>
+
+**Response body example** 
+
+> "token"
+
+<br/><br/>
 
 #### 2. Endpoint: `/api/v1/auth/patients`
 
