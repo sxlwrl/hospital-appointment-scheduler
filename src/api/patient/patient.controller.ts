@@ -56,9 +56,7 @@ export class PatientController {
 
     const errors = await validate(updatePatientDto);
 
-    if (errors.length > 0) {
-      return res.status(400).json(errors);
-    }
+    if (errors.length > 0) return res.status(400).json(errors);
 
     try {
       const updatedPatient = await this.patientService.updatePatient(

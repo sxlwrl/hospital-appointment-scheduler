@@ -35,9 +35,7 @@ export class SpecializationController {
 
     const errors = await validate(createSpecializationDto);
 
-    if (errors.length > 0) {
-      return res.status(400).json(errors);
-    }
+    if (errors.length > 0) return res.status(400).json(errors);
 
     try {
       const createdSpecialization =
@@ -56,9 +54,7 @@ export class SpecializationController {
 
     const errors = await validate(updateSpecializationDto);
 
-    if (errors.length > 0) {
-      return res.status(400).json(errors);
-    }
+    if (errors.length > 0) return res.status(400).json(errors);
 
     try {
       const updatedSpecialization =
