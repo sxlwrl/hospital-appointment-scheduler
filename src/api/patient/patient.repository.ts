@@ -1,6 +1,7 @@
-import { Pool, QueryResult } from 'pg';
+import { Pool} from 'pg';
 import { Patient } from './patient.model';
 import { CreatePatientDto, UpdatePatientDto } from './patient.dto';
+import { executeQuery } from '../../utils/executeQuery';
 
 export class PatientRepository {
   constructor(private readonly pool: Pool) {}
@@ -19,7 +20,7 @@ export class PatientRepository {
 
   async findAll(): Promise<Patient[]> {
     const query = `SELECT * FROM patients`;
-    const queryResult = await this.executeQuery(query);
+    const queryResult = await executeQuery(this.pool, query);
     return queryResult.rows.map(this.mapToPatient);
   }
 
@@ -33,7 +34,7 @@ export class PatientRepository {
       data.password,
     ];
 
-    const result = await this.executeQuery(query, values);
+    const result = await executeQuery(this.pool, query, values);
     return this.mapToPatient(result.rows[0]);
   }
 
@@ -68,32 +69,19 @@ export class PatientRepository {
 
     const query = `UPDATE patients SET ${fields.join(', ')} WHERE id = ${id} RETURNING *`;
 
-    const result = await this.executeQuery(query, values);
+    const result = await executeQuery(this.pool, query, values);
     return this.mapToPatient(result.rows[0]);
   }
 
   async delete(id: number): Promise<void> {
     const query = 'DELETE FROM patients WHERE id = $1';
-    await this.executeQuery(query, [id]);
+    await executeQuery(this.pool, query, [id]);
   }
 
   private async findByData(field: string, value: any): Promise<Patient | null> {
     const query = `SELECT * FROM patients WHERE ${field} = $1`;
-    const result = await this.executeQuery(query, [value]);
+    const result = await executeQuery(this.pool, query, [value]);
     return result.rowCount ? this.mapToPatient(result.rows[0]) : null;
-  }
-
-  private async executeQuery(
-    query: string,
-    values?: any[],
-  ): Promise<QueryResult> {
-    try {
-      return values
-        ? await this.pool.query(query, values)
-        : await this.pool.query(query);
-    } catch (error) {
-      throw new Error('Cannot execute query');
-    }
   }
 
   private mapToPatient(row: any): Patient {

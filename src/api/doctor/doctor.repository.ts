@@ -1,6 +1,7 @@
-import { Pool, QueryResult } from 'pg';
+import { Pool } from 'pg';
 import { Doctor } from './doctor.model';
 import { CreateDoctorDto, UpdateDoctorDto } from './doctor.dto';
+import { executeQuery } from '../../utils/executeQuery';
 
 export class DoctorRepository {
   constructor(private readonly pool: Pool) {}
@@ -11,13 +12,13 @@ export class DoctorRepository {
 
   async findAll(): Promise<Doctor[]> {
     const query = `SELECT * FROM doctors`;
-    const queryResult = await this.executeQuery(query);
+    const queryResult = await executeQuery(this.pool, query);
     return queryResult.rows.map(this.mapToDoctor);
   }
 
   async create(data: CreateDoctorDto): Promise<Doctor> {
     const query = `INSERT INTO doctors (first_name, last_name, specialization_id) VALUES ($1, $2, $3) RETURNING *`;
-    const result = await this.executeQuery(query, [
+    const result = await executeQuery(this.pool, query, [
       data.firstName,
       data.lastName,
       data.specialization_id,
@@ -46,32 +47,19 @@ export class DoctorRepository {
 
     const query = `UPDATE doctors SET ${fields.join(', ')} WHERE id = ${id} RETURNING *`;
 
-    const result = await this.executeQuery(query, values);
+    const result = await executeQuery(this.pool, query, values);
     return this.mapToDoctor(result.rows[0]);
   }
 
   async delete(id: number): Promise<void> {
     const query = 'DELETE FROM doctors WHERE id = $1';
-    await this.executeQuery(query, [id]);
+    await executeQuery(this.pool, query, [id]);
   }
 
   private async findByData(field: string, value: any): Promise<Doctor | null> {
     const query = `SELECT * FROM doctors WHERE ${field} = $1`;
-    const result = await this.executeQuery(query, [value]);
+    const result = await executeQuery(this.pool, query, [value]);
     return result.rowCount ? this.mapToDoctor(result.rows[0]) : null;
-  }
-
-  private async executeQuery(
-    query: string,
-    values?: any[],
-  ): Promise<QueryResult> {
-    try {
-      return values
-        ? await this.pool.query(query, values)
-        : await this.pool.query(query);
-    } catch (error) {
-      throw new Error('Cannot execute query');
-    }
   }
 
   private mapToDoctor(row: any): Doctor {

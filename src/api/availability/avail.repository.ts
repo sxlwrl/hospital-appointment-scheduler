@@ -1,6 +1,7 @@
-import { Pool, QueryResult } from 'pg';
+import { Pool } from 'pg';
 import { Availability } from './avail.model';
 import { CreateAvailDto, UpdateAvailDto } from './avail.dto';
+import { executeQuery } from '../../utils/executeQuery';
 
 export class AvailRepository {
   constructor(private readonly pool: Pool) {}
@@ -11,13 +12,13 @@ export class AvailRepository {
 
   async findAll(): Promise<Availability[]> {
     const query = 'SELECT * FROM availability';
-    const queryResult = await this.executeQuery(query);
+    const queryResult = await executeQuery(this.pool, query);
     return queryResult.rows.map(this.mapToAvailability);
   }
 
   async create(data: CreateAvailDto): Promise<Availability> {
     const query = `INSERT INTO availability (doctor_id, available_date, available_time, duration) VALUES ($1, $2, $3, $4) RETURNING *`;
-    const result = await this.executeQuery(query, [
+    const result = await executeQuery(this.pool, query, [
       data.doctor_id,
       data.available_date,
       data.available_time,
@@ -53,13 +54,13 @@ export class AvailRepository {
 
     const query = `UPDATE availability SET ${fields.join(', ')} WHERE id = ${id} RETURNING *`;
 
-    const result = await this.executeQuery(query, values);
+    const result = await executeQuery(this.pool, query, values);
     return this.mapToAvailability(result.rows[0]);
   }
 
   async delete(id: number): Promise<void> {
     const query = 'DELETE FROM availability WHERE id = $1';
-    await this.executeQuery(query, [id]);
+    await executeQuery(this.pool, query, [id]);
   }
 
   private async findByData(
@@ -67,21 +68,8 @@ export class AvailRepository {
     value: any,
   ): Promise<Availability | null> {
     const query = `SELECT * FROM availability WHERE ${field} = $1`;
-    const result = await this.executeQuery(query, [value]);
+    const result = await executeQuery(this.pool, query, [value]);
     return result.rowCount ? this.mapToAvailability(result.rows[0]) : null;
-  }
-
-  private async executeQuery(
-    query: string,
-    values?: any[],
-  ): Promise<QueryResult> {
-    try {
-      return values
-        ? await this.pool.query(query, values)
-        : await this.pool.query(query);
-    } catch (error) {
-      throw new Error('Cannot execute query');
-    }
   }
 
   private mapToAvailability(row: any): Availability {

@@ -1,8 +1,7 @@
-import { Pool, QueryResult } from 'pg';
+import { Pool } from 'pg';
 import { Appointment } from './appointment.model';
 import { CreateAppointmentDto, UpdateAppointmentDto } from './appointment.dto';
-import { UpdateAvailDto } from '../availability/avail.dto';
-import { Availability } from '../availability/avail.model';
+import { executeQuery } from '../../utils/executeQuery';
 
 export class AppointmentRepository {
   constructor(private readonly pool: Pool) {}
@@ -13,12 +12,13 @@ export class AppointmentRepository {
 
   async findAll(): Promise<Appointment[]> {
     const query = 'SELECT * FROM appointments';
-    const queryResult = await this.executeQuery(query);
+    const queryResult = await executeQuery(this.pool, query);
     return queryResult.rows.map(this.mapToAppointment);
   }
 
   async create(data: CreateAppointmentDto): Promise<Appointment> {
-    const availableSlot = await this.executeQuery(
+    const availableSlot = await executeQuery(
+      this.pool,
       `SELECT * FROM availability WHERE doctor_id = $1 AND available_date = $2 AND available_time = $3 AND duration >= $4`,
       [
         data.doctor_id,
@@ -33,7 +33,7 @@ export class AppointmentRepository {
     }
 
     const query = `INSERT INTO appointments (patient_id, doctor_id, specialization_id, appointment_date, appointment_time, duration) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
-    const result = await this.executeQuery(query, [
+    const result = await executeQuery(this.pool, query, [
       data.patient_id,
       data.doctor_id,
       data.specialization_id,
@@ -80,13 +80,13 @@ export class AppointmentRepository {
 
     const query = `UPDATE appointments SET ${fields.join(', ')} WHERE id = ${id} RETURNING *`;
 
-    const result = await this.executeQuery(query, values);
+    const result = await executeQuery(this.pool, query, values);
     return this.mapToAppointment(result.rows[0]);
   }
 
   async delete(id: number): Promise<void> {
     const query = 'DELETE FROM appointments WHERE id = $1';
-    await this.executeQuery(query, [id]);
+    await executeQuery(this.pool, query, [id]);
   }
 
   private async findByData(
@@ -94,21 +94,8 @@ export class AppointmentRepository {
     value: any,
   ): Promise<Appointment | null> {
     const query = `SELECT * FROM appointments WHERE ${field} = $1`;
-    const result = await this.executeQuery(query, [value]);
+    const result = await executeQuery(this.pool, query, [value]);
     return result.rowCount ? this.mapToAppointment(result.rows[0]) : null;
-  }
-
-  private async executeQuery(
-    query: string,
-    values?: any[],
-  ): Promise<QueryResult> {
-    try {
-      return values
-        ? await this.pool.query(query, values)
-        : await this.pool.query(query);
-    } catch (error) {
-      throw new Error('Cannot execute query');
-    }
   }
 
   private mapToAppointment(row: any): Appointment {
