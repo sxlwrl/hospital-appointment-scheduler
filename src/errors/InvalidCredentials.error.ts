@@ -1,7 +1,7 @@
 export class InvalidCredentialsError extends Error {
   public code: number;
-  constructor(name: string) {
-    super(`Invalid Credentials: ${name}`);
+  constructor(message?: string) {
+    super(message);
     this.name = `InvalidCredentialsError`;
     this.code = 401;
   }

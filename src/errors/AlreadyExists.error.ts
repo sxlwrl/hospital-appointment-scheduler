@@ -1,8 +1,8 @@
 export class AlreadyExistsError extends Error {
   public code: number;
-  constructor(name: string) {
-    super(`${name} already exists`);
-    this.name = `${name}AlreadyExistsError`;
+  constructor(message?: string) {
+    super(message);
+    this.name = `AlreadyExistsError`;
     this.code = 409;
   }
 }

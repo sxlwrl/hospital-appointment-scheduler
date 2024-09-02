@@ -6,9 +6,9 @@ export class Patient {
   constructor(
     public id: number,
     public username: string,
-    public firstName: string,
-    public lastName: string,
+    public first_name: string,
+    public last_name: string,
     public email: string,
-    public passwordHash: string,
+    public password_hash: string,
   ) {}
 }

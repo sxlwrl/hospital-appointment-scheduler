@@ -1,6 +1,8 @@
 import {
   IsEmail,
+  IsMilitaryTime,
   IsNotEmpty,
+  IsNumber,
   IsString,
   MaxLength,
   MinLength,
@@ -51,4 +53,27 @@ export const PasswordValidation = () =>
     IsString({ message: 'Password must be of string type' }),
     MinLength(5, { message: 'Min length is 5' }),
     MaxLength(250, { message: 'Max length is 250' }),
+  );
+
+export const TitleValidation = () =>
+  combineDecorators(
+    IsNotEmpty({ message: 'Title cannot be empty' }),
+    IsString({ message: 'Title must be of string type' }),
+    MinLength(5, { message: 'Min length is 5' }),
+    MaxLength(50, { message: 'Max length is 50' }),
+  );
+
+export const NumberValidation = () =>
+  combineDecorators(
+    IsNotEmpty({ message: 'Data cannot be empty' }),
+    IsNumber({}, { message: 'Data should be a number' }),
+  );
+
+export const DateValidation = () =>
+  combineDecorators(IsNotEmpty({ message: 'Data cannot be empty' }));
+
+export const TimeValidation = () =>
+  combineDecorators(
+    IsNotEmpty({ message: 'Data cannot be empty' }),
+    IsMilitaryTime({ message: 'Data should be a time' }),
   );
