@@ -4,6 +4,7 @@ import { isAuthenticated } from '../../middlewares/auth.middleware';
 import { DoctorService } from './doctor.service';
 import { DoctorRepository } from './doctor.repository';
 import { DoctorController } from './doctor.controller';
+import { SpecializationRepository } from '../specialization/specialization.repository';
 
 export class DoctorRouter {
   public router: Router;
@@ -12,7 +13,10 @@ export class DoctorRouter {
 
   constructor(private readonly pool: Pool) {
     this.router = Router();
-    this.doctorService = new DoctorService(new DoctorRepository(this.pool));
+    this.doctorService = new DoctorService(
+      new DoctorRepository(this.pool),
+      new SpecializationRepository(this.pool),
+    );
     this.doctorController = new DoctorController(this.doctorService);
     this.initializeRoutes();
   }
