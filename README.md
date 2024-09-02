@@ -414,7 +414,58 @@
 
 #### 1. Endpoint `/api/v1/auth`:
 
-* **Endpoint `/api/v1/auth/login`**
+* POST **Endpoint `/api/v1/auth/register`**
+  
+  * The server should return a status of 201 if the registration was successful
+  * The server should return a status of 400 if the registration was unsuccessful
+  * * The server should return a status of 409 if the patient already exists
+
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>username</code></td>
+    <td>string</td>
+    <td>true</td>
+    <td>Username</td>
+  </tr>
+  <tr>
+    <td><code>firstName</code></td>
+    <td>string</td>
+    <td>true</td>
+    <td>First Name</td>
+  </tr>
+  <tr>
+    <td><code>lastName</code></td>
+    <td>string</td>
+    <td>true</td>
+    <td>Last Name</td>
+  </tr>
+  <tr>
+    <td><code>email</code></td>
+    <td>string</td>
+    <td>true</td>
+    <td>Email</td>
+  </tr>
+  <tr>
+    <td><code>password</code></td>
+    <td>string</td>
+    <td>true</td>
+    <td>Password</td>
+  </tr>
+</table>
+
+> Request
+
+> Response body 
+
+</br>
+
+* POST **Endpoint `/api/v1/auth/login`**
 
 <table>
   <tr>
