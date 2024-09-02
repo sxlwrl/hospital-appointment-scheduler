@@ -464,7 +464,7 @@
 
 
 > curl -X 'POST' \\\ </br>
-'/register' \\\ </br>
+'/api/v1/auth/register' \\\ </br>
  { </br>
   &emsp;"username": "username", </br>
   &emsp;"firstName": "firstName", </br>
@@ -516,7 +516,7 @@
 **Request**
 
 > curl -X 'POST' \\\ </br>
-'/login' \\\ </br>
+'/api/v1/auth/login' \\\ </br>
  { </br>
   &emsp;"username": "username", </br>
    &emsp;"password": "password" </br>
@@ -543,7 +543,7 @@
 
 
 > curl -X 'POST' \\\ </br>
-'/refresh' \\\ </br>
+'/api/v1/auth/refresh' \\\ </br>
 
 **Response body example** 
 
@@ -552,6 +552,202 @@
 <br/><br/>
 
 #### 2. Endpoint: `/api/v1/auth/patients`
+
+* GET **Endpoint `/api/v1/auth/patients/:id`**
+
+  Finds patient by ID
+  
+  * The server should return a status of 200 if the patient was successfuly found
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the patient is not found
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Patient's ID</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'GET' \\\ </br>
+'/api/v1/auth/patients/1' \\\ </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"username": "test", </br>
+    &emsp;"first_name": "test", </br>
+    &emsp;"last_name": "test", </br>
+    &emsp;"email": "test@gmail.com", </br>
+    &emsp;"password_hash": "$2b$10$wmuav.usLKBtL1KHKzfldudG8LiikrOMgm74d/H6lnJEa9I0oeIGq" </br>
+} </br>
+</br>
+
+* GET **Endpoint `/api/v1/auth/patients`**
+
+  Finds all patients
+  
+  * The server should return a status of 200 if the patients were successfuly returned
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+</br>
+
+**Request**
+
+
+> curl -X 'GET' \\\ </br>
+'/api/v1/auth/patients' \\\ </br>
+
+**Response body example** 
+
+> [{ </br>
+    &emsp;"id": 1, </br>
+    &emsp;"username": "test", </br>
+    &emsp;"first_name": "test", </br>
+    &emsp;"last_name": "test", </br>
+    &emsp;"email": "test@gmail.com", </br>
+    &emsp;"password_hash": "$2b$10$wmuav.usLKBtL1KHKzfldudG8LiikrOMgm74d/H6lnJEa9I0oeIGq" </br>
+}, <br/>
+> { </br>
+    &emsp;"id": 2, </br>
+    &emsp;"username": "test2", </br>
+    &emsp;"first_name": "test2", </br>
+    &emsp;"last_name": "test2", </br>
+    &emsp;"email": "test2@gmail.com", </br>
+    &emsp;"password_hash": "$2b$10$wmuav.usLKBtL1KHKzfldudG8LiikrOMgm74fsj65GSl7snfjcGwkd" </br>
+}] </br>
+</br>
+
+* PATCH **Endpoint `/api/v1/auth/patients/:id`**
+
+  Updates patient that has passed ID
+  
+  * The server should return a status of 200 if the patient was successfuly updated
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 403 if the patient updates data other than theirs
+  * The server should return a status of 404 if the patient doesn't exist 
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Patient's ID</td>
+  </tr>
+  <tr>
+    <td><code>username</code></td>
+    <td>string</td>
+    <td></td>
+    <td>Username</td>
+  </tr>
+  <tr>
+    <td><code>firstName</code></td>
+    <td>string</td>
+    <td></td>  
+    <td>First Name</td>
+  </tr>
+  <tr>
+    <td><code>lastName</code></td>
+    <td>string</td>
+    <td></td>
+    <td>Last Name</td>
+  </tr>
+  <tr>
+    <td><code>email</code></td>
+    <td>string</td>
+    <td></td>
+    <td>Email</td>
+  </tr>
+  <tr>
+    <td><code>password</code></td>
+    <td>string</td>
+    <td></td>
+    <td>Password</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'PATCH' \\\ </br>
+'/api/v1/auth/patients/1' \\\ </br>
+ { </br>
+  &emsp;"username": "username", </br>
+   &emsp;"email": "email", </br>
+ } </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"username": "test3", </br>
+    &emsp;"first_name": "test", </br>
+    &emsp;"last_name": "test", </br>
+    &emsp;"email": "test3@gmail.com", </br>
+    &emsp;"password_hash": "$2b$10$wmuav.usLKBtL1KHKzfldudG8LiikrOMgm74d/H6lnJEa9I0oeIGq" </br>
+} </br>
+</br>
+
+* DELETE **Endpoint `/api/v1/auth/patients/:id`**
+
+  Deletes patient that has passed ID
+  
+  * The server should return a status of 204 if the patient was successfuly deleted
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 403 if the patient deletes data other than theirs
+  * The server should return a status of 404 if the patient doesn't exist 
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Patient's ID</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'DELETE' \\\ </br>
+'/api/v1/auth/patients/1' \\\ </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"message": 'Patient deleted' </br>
+} </br>
+
+</br></br>
 
 #### 3. Endpoint: `/api/v1/auth/specializations`
 
