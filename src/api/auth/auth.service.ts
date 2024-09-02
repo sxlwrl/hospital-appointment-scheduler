@@ -24,7 +24,7 @@ export class AuthService {
    */
 
   async register(data: RegisterDto) {
-    const { username, firstName, lastName, email, password } = data;
+    const { username, email, password } = data;
 
     const isUsernameTaken =
       await this.patientRepository.findByUsername(username);

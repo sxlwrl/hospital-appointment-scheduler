@@ -69,12 +69,3 @@ function onError(error: NodeJS.ErrnoException): void {
       throw error;
   }
 }
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening(): void {
-  const addr = server.address();
-  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port;
-}
