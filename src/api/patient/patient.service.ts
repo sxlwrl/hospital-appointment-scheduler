@@ -17,9 +17,8 @@ export class PatientService {
   async findById(id: number) {
     const patient = await this.patientRepository.findById(id);
 
-    if (!patient) {
-      throw new NotFoundError('patient');
-    }
+    if (!patient)
+      throw new NotFoundError('Patient with described id doesnt exist');
 
     return patient;
   }
@@ -33,7 +32,7 @@ export class PatientService {
 
     const hashedPassword = data.password
       ? await bcrypt.hash(data.password, 10)
-      : patient.passwordHash;
+      : patient.password_hash;
 
     return await this.patientRepository.update(id, {
       ...data,

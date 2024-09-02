@@ -22,9 +22,8 @@ export class SpecializationService {
   async findById(id: number) {
     const specialization = await this.specializationRepository.findById(id);
 
-    if (!specialization) {
-      throw new NotFoundError('specialization');
-    }
+    if (!specialization)
+      throw new NotFoundError('Specialization with described id doesnt exist');
 
     return specialization;
   }
@@ -38,9 +37,10 @@ export class SpecializationService {
 
     const isTitleTaken = await this.specializationRepository.findByTitle(title);
 
-    if (isTitleTaken) {
-      throw new AlreadyExistsError('specialization');
-    }
+    if (isTitleTaken)
+      throw new AlreadyExistsError(
+        'Specialization with this title already exists',
+      );
 
     return await this.specializationRepository.create(data);
   }
