@@ -26,21 +26,16 @@ export class CreateAvailDto implements Required<BaseAvailabilityDto> {
   @TimeValidation() available_time: string;
   @NumberValidation() duration: number;
 
-  constructor({
-    doctor_id,
-    available_date,
-    available_time,
-    duration,
-  }: {
+  constructor(data: {
     doctor_id: number;
     available_date: string;
     available_time: string;
     duration: number;
   }) {
-    this.doctor_id = doctor_id;
-    this.available_date = available_date;
-    this.available_time = available_time;
-    this.duration = duration;
+    this.doctor_id = data.doctor_id;
+    this.available_date = data.available_date;
+    this.available_time = data.available_time;
+    this.duration = data.duration;
   }
 }
 
@@ -65,20 +60,15 @@ export class UpdateAvailDto implements Partial<BaseAvailabilityDto> {
   @IsOptional()
   duration: number;
 
-  constructor({
-    doctor_id,
-    available_date,
-    available_time,
-    duration,
-  }: {
+  constructor(data: {
     doctor_id: number;
     available_date: string;
     available_time: string;
     duration: number;
   }) {
-    this.doctor_id = doctor_id;
-    this.available_date = available_date;
-    this.available_time = available_time;
-    this.duration = duration;
+    this.doctor_id = data.doctor_id;
+    this.available_date = data.available_date;
+    this.available_time = data.available_time;
+    this.duration = data.duration;
   }
 }

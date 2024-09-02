@@ -1,7 +1,7 @@
 import {
   FirstNameValidation,
   LastNameValidation,
-  IdValidation,
+  NumberValidation,
 } from '../../utils/validationDecorators';
 import { IsOptional } from 'class-validator';
 
@@ -22,20 +22,16 @@ interface BaseDoctorDto {
 export class CreateDoctorDto implements Required<BaseDoctorDto> {
   @FirstNameValidation() firstName: string;
   @LastNameValidation() lastName: string;
-  @IdValidation() specialization_id: number;
+  @NumberValidation() specialization_id: number;
 
-  constructor({
-    firstName,
-    lastName,
-    specialization_id,
-  }: {
+  constructor(data: {
     firstName: string;
     lastName: string;
     specialization_id: number;
   }) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.specialization_id = specialization_id;
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
+    this.specialization_id = data.specialization_id;
   }
 }
 
@@ -52,21 +48,17 @@ export class UpdateDoctorDto implements Partial<BaseDoctorDto> {
   @IsOptional()
   lastName: string;
 
-  @IdValidation()
+  @NumberValidation()
   @IsOptional()
   specialization_id: number;
 
-  constructor({
-    firstName,
-    lastName,
-    specialization_id,
-  }: {
+  constructor(data: {
     firstName: string;
     lastName: string;
     specialization_id: number;
   }) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.specialization_id = specialization_id;
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
+    this.specialization_id = data.specialization_id;
   }
 }
