@@ -9,10 +9,12 @@
   <li>Database Documentation</li>
   <li>API Documentation
     <ul>
-      <li>/api/v1/register</li>
-      <li>/api/v1/login</li>
-      <li>test</li>
-      <li>test</li>
+      <li>/api/v1/auth</li>
+      <li>/api/v1/patients</li>
+      <li>/api/v1/specializations</li>
+      <li>/api/v1/doctors</li>
+      <li>/api/v1/availabilities</li>
+      <li>/api/v1/appointments</li>
     </ul>
   </li>
   <li>How To Install And Run The Project</li>
@@ -410,11 +412,17 @@
 
 ## ℹ️ API Documentation
 
-#### 1. `/api/v1/auth/register`
+#### 1. Endpoint `/api/v1/auth`:
 
-#### 2. `/api/v1/auth/login`
+#### 2. Endpoint: `/api/v1/auth/patients`
 
-#### 3. `/api/v1/auth/refresh`
+#### 3. Endpoint: `/api/v1/auth/specializations`
+
+#### 4. Endpoint: `/api/v1/auth/doctors`
+
+#### 5. Endpoint: `/api/v1/auth/availabilities`
+
+#### 6. Endpoint: `/api/v1/auth/appointments`
 
 </br>
 
