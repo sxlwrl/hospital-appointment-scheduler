@@ -17,7 +17,7 @@ export class AvailController {
    * @param res - response
    */
 
-  async getById(req: Request, res: Response) {
+  async getById(req: Request, res: Response): Promise<Response> {
     const availId = parseInt(req.params.id, 10);
 
     try {
@@ -73,7 +73,7 @@ export class AvailController {
    * @param res - response
    */
 
-  async update(req: Request, res: Response) {
+  async update(req: Request, res: Response): Promise<Response> {
     const availId = parseInt(req.params.id, 10);
 
     const updateAvailabilityDto = new UpdateAvailDto(req.body);

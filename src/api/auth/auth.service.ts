@@ -31,13 +31,11 @@ export class AuthService {
 
     const isEmailTaken = await this.patientRepository.findByEmail(email);
 
-    if (isUsernameTaken) {
-      throw new AlreadyExistsError('user');
-    }
+    if (isUsernameTaken)
+      throw new AlreadyExistsError('User with this username already exists');
 
-    if (isEmailTaken) {
-      throw new AlreadyExistsError('user');
-    }
+    if (isEmailTaken)
+      throw new AlreadyExistsError('User with this email already exists');
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -55,15 +53,13 @@ export class AuthService {
     const { username, password } = data;
     const user = await this.patientRepository.findByUsername(username);
 
-    if (!user) {
-      throw new NotFoundError('user');
-    }
+    if (!user)
+      throw new NotFoundError('User with described username is not found');
 
-    const comparedPassword = await bcrypt.compare(password, user.passwordHash);
+    const comparedPassword = await bcrypt.compare(password, user.password_hash);
 
-    if (!comparedPassword) {
-      throw new InvalidCredentialsError('password');
-    }
+    if (!comparedPassword)
+      throw new InvalidCredentialsError('Password is not correct');
 
     const accessToken = generateToken(
       { userId: user.id, role: 'patient' },
@@ -85,9 +81,8 @@ export class AuthService {
    */
 
   async refreshToken(refreshToken: string) {
-    if (!verifyToken(refreshToken)) {
-      throw new InvalidCredentialsError('token');
-    }
+    if (!verifyToken(refreshToken))
+      throw new InvalidCredentialsError('Token is not correct');
 
     const payload = JSON.parse(
       Buffer.from(refreshToken.split('.')[1], 'base64').toString(),

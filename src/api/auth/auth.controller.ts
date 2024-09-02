@@ -22,9 +22,7 @@ export class AuthController {
 
     const errors = await validate(registerDto);
 
-    if (errors.length > 0) {
-      return res.status(400).json({ errors });
-    }
+    if (errors.length > 0) return res.status(400).json({ errors });
 
     try {
       const patient = await this.authService.register(req.body);
@@ -44,9 +42,7 @@ export class AuthController {
     const loginDto = new LoginDto(req.body);
     const errors = await validate(loginDto);
 
-    if (errors.length > 0) {
-      return res.status(400).json({ errors });
-    }
+    if (errors.length > 0) return res.status(400).json({ errors });
 
     try {
       const { accessToken, refreshToken } = await this.authService.login(
