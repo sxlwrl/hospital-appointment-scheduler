@@ -1700,11 +1700,43 @@
     &emsp;"message": 'Appointment deleted' </br>
 } </br>
 
-</br></br>
-
 </br>
 
 ## 🚀 How To Install And Run The Project
+
+Clone github repository
+
+**`git clone https://github.com/sxlwrl/hospital-appointment-scheduler`**
+
+</br>
+
+Install all dependencies
+
+**`yarn install`**
+
+</br>
+
+To start project in developer mode
+
+**`yarn start:dev`**
+
+</br>
+
+To build project
+
+**`yarn build`**
+
+</br>
+
+To lint project
+
+**`yarn lint`**
+
+</br>
+
+For testing
+
+**`yarn test`**
 
 </br>
 
