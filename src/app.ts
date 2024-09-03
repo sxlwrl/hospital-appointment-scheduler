@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { json } from 'body-parser';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
@@ -28,7 +28,7 @@ const pool = new Pool({
   database: 'postgres',
 });
 
-app.use((err: Error, req: Request, res: Response) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(404).json({ message: err.message });
 });
 
