@@ -582,7 +582,7 @@
 
 
 > curl -X 'GET' \\\ </br>
-'/api/v1/auth/patients/1' \\\ </br>
+'/api/v1/patients/1' \\\ </br>
 
 **Response body example** 
 
@@ -609,7 +609,7 @@
 
 
 > curl -X 'GET' \\\ </br>
-'/api/v1/auth/patients' \\\ </br>
+'/api/v1/patients' \\\ </br>
 
 **Response body example** 
 
@@ -691,7 +691,7 @@
 
 
 > curl -X 'PATCH' \\\ </br>
-'/api/v1/auth/patients/1' \\\ </br>
+'/api/v1/patients/1' \\\ </br>
  { </br>
   &emsp;"username": "test3", </br>
    &emsp;"email": "test3@gmail.com", </br>
@@ -739,7 +739,7 @@
 
 
 > curl -X 'DELETE' \\\ </br>
-'/api/v1/auth/patients/1' \\\ </br>
+'/api/v1/patients/1' \\\ </br>
 
 **Response body example** 
 
@@ -803,7 +803,7 @@
 
 
 > curl -X 'GET' \\\ </br>
-'/api/v1/auth/specializations' \\\ </br>
+'/api/v1/specializations' \\\ </br>
 
 **Response body example** 
 
@@ -846,7 +846,7 @@
 
 
 > curl -X 'POST' \\\ </br>
-'/api/v1/auth/specializations' \\\ </br>
+'/api/v1/specializations' \\\ </br>
  { </br>
   &emsp;"title": "test", </br>
  } </br>
@@ -888,7 +888,7 @@
 
 
 > curl -X 'PATCH' \\\ </br>
-'/api/v1/auth/specializations/1' \\\ </br>
+'/api/v1/specializations/1' \\\ </br>
  { </br>
   &emsp;"title": "test2", </br>
  } </br>
@@ -930,7 +930,7 @@
 
 
 > curl -X 'DELETE' \\\ </br>
-'/api/v1/auth/specializations/1' \\\ </br>
+'/api/v1/specializations/1' \\\ </br>
 
 **Response body example** 
 
@@ -940,7 +940,7 @@
 
 </br></br>
 
-#### 4. Endpoint: `/api/v1/auth/doctors`
+#### 4. Endpoint: `/api/v1/doctors`
 
 * GET **Endpoint `/api/v1/doctors/:id`**
 
@@ -971,7 +971,7 @@
 
 
 > curl -X 'GET' \\\ </br>
-'/api/v1/auth/doctors/1' \\\ </br>
+'/api/v1/doctors/1' \\\ </br>
 
 **Response body example** 
 
@@ -996,7 +996,7 @@
 
 
 > curl -X 'GET' \\\ </br>
-'/api/v1/auth/doctors' \\\ </br>
+'/api/v1/doctors' \\\ </br>
 
 **Response body example** 
 
@@ -1056,7 +1056,7 @@
 
 
 > curl -X 'POST' \\\ </br>
-'/api/v1/auth/doctors' \\\ </br>
+'/api/v1/doctors' \\\ </br>
  { </br>
     &emsp;"first_name": "test", </br>
     &emsp;"last_name": "test", </br>
@@ -1115,7 +1115,7 @@
 
 
 > curl -X 'PATCH' \\\ </br>
-'/api/v1/auth/doctors/1' \\\ </br>
+'/api/v1/doctors/1' \\\ </br>
  { </br>
   &emsp;"first_name": "test2", </br>
  } </br>
@@ -1159,7 +1159,7 @@
 
 
 > curl -X 'DELETE' \\\ </br>
-'/api/v1/auth/doctors/1' \\\ </br>
+'/api/v1/doctors/1' \\\ </br>
 
 **Response body example** 
 
@@ -1200,7 +1200,7 @@
 
 
 > curl -X 'GET' \\\ </br>
-'/api/v1/auth/availabilities/1' \\\ </br>
+'/api/v1/availabilities/1' \\\ </br>
 
 **Response body example** 
 
@@ -1226,7 +1226,7 @@
 
 
 > curl -X 'GET' \\\ </br>
-'/api/v1/auth/availabilities' \\\ </br>
+'/api/v1/availabilities' \\\ </br>
 
 **Response body example** 
 
@@ -1330,22 +1330,28 @@
     <td>Description</td>
   </tr>
   <tr>
-    <td><code>first_name</code></td>
-    <td>string</td>
-    <td></td>
-    <td>Doctor's first name</td>
-  </tr>
-  <tr>
-    <td><code>last_name</code></td>
-    <td>string</td>
-    <td></td>
-    <td>Doctor's last name</td>
-  </tr>
-  <tr>
-    <td><code>specialization_id</code></td>
+    <td><code>doctor_id</code></td>
     <td>number</td>
     <td></td>
-    <td>Specialization id</td>
+    <td>Doctor's ID</td>
+  </tr>
+  <tr>
+    <td><code>available_date</code></td>
+    <td>date</td>
+    <td></td>
+    <td>Available date</td>
+  </tr>
+  <tr>
+    <td><code>available_time</code></td>
+    <td>string</td>
+    <td></td>
+    <td>Available time</td>
+  </tr>
+  <tr>
+    <td><code>duration</code></td>
+    <td>number</td>
+    <td></td>
+    <td>Duration in min</td>
   </tr>
 </table>
 </br>
@@ -1356,16 +1362,17 @@
 > curl -X 'PATCH' \\\ </br>
 '/api/v1/availabilities/1' \\\ </br>
  { </br>
-  &emsp;"first_name": "test2", </br>
+  &emsp;"doctor_id": 2, </br>
  } </br>
 
 **Response body example** 
 
 > { </br>
     &emsp;"id": 1, </br>
-    &emsp;"first_name": "test2", </br>
-    &emsp;"last_name": "test", </br>
-    &emsp;"specialization_id": "1", </br>
+    &emsp;"doctor_id": 2, </br>
+    &emsp;"available_date": "2024-10-10", </br>
+    &emsp;"available_time": "14:30", </br>
+    &emsp;"duration": 50 </br>
 } </br>
 </br>
 
