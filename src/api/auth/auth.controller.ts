@@ -61,7 +61,9 @@ export class AuthController {
         maxAge: 86000000,
       });
 
-      return res.status(200).json({ message: 'Patient logged in' });
+      return res
+        .status(200)
+        .json({ message: 'Patient logged in', token: accessToken });
     } catch (error) {
       return handleError(res, error);
     }
