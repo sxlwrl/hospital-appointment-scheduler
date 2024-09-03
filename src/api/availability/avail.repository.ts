@@ -10,6 +10,7 @@ export class AvailRepository {
   async findById(id: number): Promise<Availability | null> {
     return findByData<Availability>(
       this.pool,
+      ['id', 'doctor_id', 'available_date', 'available_time', 'duration'],
       'availability',
       'id',
       id,
@@ -18,7 +19,8 @@ export class AvailRepository {
   }
 
   async findAll(): Promise<Availability[]> {
-    const query = 'SELECT * FROM availability';
+    const query =
+      'SELECT id, doctor_id, available_date, available_time, duration FROM availability';
     const queryResult = await executeQuery(this.pool, query);
     return queryResult.rows.map(this.mapToAvailability);
   }

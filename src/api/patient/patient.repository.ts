@@ -8,12 +8,20 @@ export class PatientRepository {
   constructor(private readonly pool: Pool) {}
 
   async findById(id: number): Promise<Patient | null> {
-    return findByData(this.pool, 'patients', 'id', id, this.mapToPatient);
+    return findByData(
+      this.pool,
+      ['id', 'username', 'first_name', 'last_name', 'email', 'password_hash'],
+      'patients',
+      'id',
+      id,
+      this.mapToPatient,
+    );
   }
 
   async findByUsername(username: string): Promise<Patient | null> {
     return findByData(
       this.pool,
+      ['id', 'username', 'first_name', 'last_name', 'email', 'password_hash'],
       'patients',
       'username',
       username,
@@ -22,11 +30,18 @@ export class PatientRepository {
   }
 
   async findByEmail(email: string): Promise<Patient | null> {
-    return findByData(this.pool, 'patients', 'email', email, this.mapToPatient);
+    return findByData(
+      this.pool,
+      ['id', 'username', 'first_name', 'last_name', 'email', 'password_hash'],
+      'patients',
+      'email',
+      email,
+      this.mapToPatient,
+    );
   }
 
   async findAll(): Promise<Patient[]> {
-    const query = `SELECT * FROM patients`;
+    const query = `SELECT id, username, first_name, last_name, email, password_hash FROM patients`;
     const queryResult = await executeQuery(this.pool, query);
     return queryResult.rows.map(this.mapToPatient);
   }

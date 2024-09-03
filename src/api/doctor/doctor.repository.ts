@@ -8,11 +8,18 @@ export class DoctorRepository {
   constructor(private readonly pool: Pool) {}
 
   async findById(id: number): Promise<Doctor | null> {
-    return findByData(this.pool, 'doctors', 'id', id, this.mapToDoctor);
+    return findByData(
+      this.pool,
+      ['id', 'first_name', 'last_name', 'specialization_id'],
+      'doctors',
+      'id',
+      id,
+      this.mapToDoctor,
+    );
   }
 
   async findAll(): Promise<Doctor[]> {
-    const query = `SELECT * FROM doctors`;
+    const query = `SELECT id, first_name, last_name, specialization_id FROM doctors`;
     const queryResult = await executeQuery(this.pool, query);
     return queryResult.rows.map(this.mapToDoctor);
   }
@@ -56,12 +63,6 @@ export class DoctorRepository {
     const query = 'DELETE FROM doctors WHERE id = $1';
     await executeQuery(this.pool, query, [id]);
   }
-
-  // private async findByData(field: string, value: any): Promise<Doctor | null> {
-  //   const query = `SELECT * FROM doctors WHERE ${field} = $1`;
-  //   const result = await executeQuery(this.pool, query, [value]);
-  //   return result.rowCount ? this.mapToDoctor(result.rows[0]) : null;
-  // }
 
   private mapToDoctor(row: any): Doctor {
     if (!row) throw new Error('Cannot map to doctor');

@@ -1,12 +1,9 @@
 import { Request, Response } from 'express';
-import { SpecializationController } from '../specialization.controller';
-import { ISpecializationService } from '../interfaces/ISpecializationService';
+import { DoctorController } from '../doctor.controller';
+import { IDoctorService } from '../interfaces/IDoctorService';
 import { handleError } from '../../../utils/handleError';
 import { validate } from 'class-validator';
-import {
-  CreateSpecializationDto,
-  UpdateSpecializationDto,
-} from '../specialization.dto';
+import { CreateDoctorDto, UpdateDoctorDto } from '../doctor.dto';
 
 jest.mock('../../../utils/handleError', () => ({
   handleError: jest.fn(),
@@ -20,6 +17,11 @@ jest.mock('class-validator', () => ({
       () => (target: any, propertyKey: string | symbol) => {},
     ),
   IsString: jest
+    .fn()
+    .mockImplementation(
+      () => (target: any, propertyKey: string | symbol) => {},
+    ),
+  IsNumber: jest
     .fn()
     .mockImplementation(
       () => (target: any, propertyKey: string | symbol) => {},
@@ -41,12 +43,12 @@ jest.mock('class-validator', () => ({
     ),
 }));
 
-const mockSpecializationService = () => ({
+const mockDoctorService = () => ({
   findById: jest.fn(),
   findAll: jest.fn(),
-  createSpecialization: jest.fn(),
-  updateSpecialization: jest.fn(),
-  deleteSpecialization: jest.fn(),
+  createDoctor: jest.fn(),
+  updateDoctor: jest.fn(),
+  deleteDoctor: jest.fn(),
 });
 
 const mockRequest = (overrides = {}) =>
@@ -64,14 +66,13 @@ const mockResponse = () => {
   return res;
 };
 
-describe('SpecializationController', () => {
-  let controller: SpecializationController;
-  let service: jest.Mocked<ISpecializationService>;
+describe('DoctorController', () => {
+  let controller: DoctorController;
+  let service: jest.Mocked<IDoctorService>;
 
   beforeEach(() => {
-    service =
-      mockSpecializationService() as jest.Mocked<ISpecializationService>;
-    controller = new SpecializationController(service);
+    service = mockDoctorService() as jest.Mocked<IDoctorService>;
+    controller = new DoctorController(service);
   });
 
   afterEach(() => {
@@ -79,17 +80,22 @@ describe('SpecializationController', () => {
   });
 
   describe('GetById', () => {
-    it('Should return specialization if it is found', async () => {
+    it('Should return doctor if it is found', async () => {
       const req = mockRequest({ params: { id: '1' } });
       const res = mockResponse();
 
-      const specialization = { id: 1, title: 'Surgery' };
-      (service.findById as jest.Mock).mockResolvedValue(specialization);
+      const doctor = {
+        id: 1,
+        first_name: 'Smith',
+        last_name: 'Watson',
+        specialization_id: 1,
+      };
+      (service.findById as jest.Mock).mockResolvedValue(doctor);
 
       await controller.getById(req, res);
 
       expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({ specialization });
+      expect(res.json).toHaveBeenCalledWith({ doctor });
     });
 
     it('Should handle errors', async () => {
@@ -106,27 +112,37 @@ describe('SpecializationController', () => {
   });
 
   describe('GetAll', () => {
-    it('Should return all specializations', async () => {
+    it('Should return all doctors', async () => {
       const req = mockRequest();
       const res = mockResponse();
 
-      const specializations = [
-        { id: 1, title: 'Surgery' },
-        { id: 2, title: 'Neurology' },
+      const doctors = [
+        {
+          id: 1,
+          first_name: 'Smith',
+          last_name: 'Watson',
+          specialization_id: 1,
+        },
+        {
+          id: 2,
+          first_name: 'Alex',
+          last_name: 'Nowman',
+          specialization_id: 1,
+        },
       ];
-      (service.findAll as jest.Mock).mockResolvedValue(specializations);
+      (service.findAll as jest.Mock).mockResolvedValue(doctors);
 
       await controller.getAll(req, res);
 
       expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({ specializations });
+      expect(res.json).toHaveBeenCalledWith({ doctors });
     });
 
     it('Should handle errors', async () => {
       const req = mockRequest();
       const res = mockResponse();
 
-      const error = new Error('Failed to get specializations');
+      const error = new Error('Failed to get doctors');
       (service.findAll as jest.Mock).mockRejectedValue(error);
 
       await controller.getAll(req, res);
@@ -136,33 +152,44 @@ describe('SpecializationController', () => {
   });
 
   describe('Create', () => {
-    it('Should create a specialization if validation passes', async () => {
-      const req = mockRequest({ body: { title: 'Surgery' } });
+    it('Should create a doctor if validation passes', async () => {
+      const req = mockRequest({
+        body: {
+          first_name: 'Smith',
+          last_name: 'Watson',
+          specialization_id: 1,
+        },
+      });
       const res = mockResponse();
 
-      const createDto = new CreateSpecializationDto(req.body);
-      const createdSpecialization = { id: 1, title: 'Surgery' };
+      const createDto = new CreateDoctorDto(req.body);
+      const createdDoctor = {
+        id: 1,
+        first_name: 'Smith',
+        last_name: 'Watson',
+        specialization_id: 1,
+      };
 
       (validate as jest.Mock).mockResolvedValue([]);
-      (service.createSpecialization as jest.Mock).mockResolvedValue(
-        createdSpecialization,
-      );
+      (service.createDoctor as jest.Mock).mockResolvedValue(createdDoctor);
 
       await controller.create(req, res);
 
       expect(validate).toHaveBeenCalledWith(createDto);
       expect(res.status).toHaveBeenCalledWith(201);
-      expect(res.json).toHaveBeenCalledWith(createdSpecialization);
+      expect(res.json).toHaveBeenCalledWith(createdDoctor);
     });
 
     it('Should return 400 if validation fails', async () => {
-      const req = mockRequest({ body: { title: '' } });
+      const req = mockRequest({
+        body: { first_name: '', last_name: 'Watson', specialization_id: 1 },
+      });
       const res = mockResponse();
 
       const validationErrors = [
         {
-          property: 'title',
-          constraints: { isNotEmpty: 'Title should not be empty' },
+          property: 'first_name',
+          constraints: { isNotEmpty: 'First name should not be empty' },
         },
       ];
       (validate as jest.Mock).mockResolvedValue(validationErrors);
@@ -174,12 +201,18 @@ describe('SpecializationController', () => {
     });
 
     it('Should handle errors', async () => {
-      const req = mockRequest({ body: { title: 'Surgery' } });
+      const req = mockRequest({
+        body: {
+          first_name: 'Smith',
+          last_name: 'Watson',
+          specialization_id: 1,
+        },
+      });
       const res = mockResponse();
 
       (validate as jest.Mock).mockResolvedValue([]);
       const error = new Error('Creation failed');
-      (service.createSpecialization as jest.Mock).mockRejectedValue(error);
+      (service.createDoctor as jest.Mock).mockRejectedValue(error);
 
       await controller.create(req, res);
 
@@ -188,36 +221,46 @@ describe('SpecializationController', () => {
   });
 
   describe('Update', () => {
-    it('Should update a specialization if validation passes', async () => {
+    it('Should update a doctor if validation passes', async () => {
       const req = mockRequest({
         params: { id: '1' },
-        body: { title: 'Neurology' },
+        body: {
+          first_name: 'Smith',
+          last_name: 'Watson',
+          specialization_id: 1,
+        },
       });
       const res = mockResponse();
 
-      const updateDto = new UpdateSpecializationDto(req.body);
-      const updatedSpecialization = { id: 1, title: 'Neurology' };
+      const updateDto = new UpdateDoctorDto(req.body);
+      const updatedDoctor = {
+        id: 1,
+        first_name: 'Smith',
+        last_name: 'Watson',
+        specialization_id: 1,
+      };
 
       (validate as jest.Mock).mockResolvedValue([]);
-      (service.updateSpecialization as jest.Mock).mockResolvedValue(
-        updatedSpecialization,
-      );
+      (service.updateDoctor as jest.Mock).mockResolvedValue(updatedDoctor);
 
       await controller.update(req, res);
 
       expect(validate).toHaveBeenCalledWith(updateDto);
       expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith(updatedSpecialization);
+      expect(res.json).toHaveBeenCalledWith(updatedDoctor);
     });
 
     it('Should return 400 if validation fails', async () => {
-      const req = mockRequest({ params: { id: '1' }, body: { title: '' } });
+      const req = mockRequest({
+        params: { id: '1' },
+        body: { first_name: '' },
+      });
       const res = mockResponse();
 
       const validationErrors = [
         {
-          property: 'title',
-          constraints: { isNotEmpty: 'Title should not be empty' },
+          property: 'first_name',
+          constraints: { isNotEmpty: 'First name cannot be empty' },
         },
       ];
       (validate as jest.Mock).mockResolvedValue(validationErrors);
@@ -231,13 +274,17 @@ describe('SpecializationController', () => {
     it('Should handle errors', async () => {
       const req = mockRequest({
         params: { id: '1' },
-        body: { title: 'Neurology' },
+        body: {
+          first_name: 'Smith',
+          last_name: 'Watson',
+          specialization_id: 1,
+        },
       });
       const res = mockResponse();
 
       (validate as jest.Mock).mockResolvedValue([]);
       const error = new Error('Update failed');
-      (service.updateSpecialization as jest.Mock).mockRejectedValue(error);
+      (service.updateDoctor as jest.Mock).mockRejectedValue(error);
 
       await controller.update(req, res);
 
@@ -246,17 +293,17 @@ describe('SpecializationController', () => {
   });
 
   describe('Delete', () => {
-    it('Should delete a specialization', async () => {
+    it('Should delete a doctor', async () => {
       const req = mockRequest({ params: { id: '1' } });
       const res = mockResponse();
 
-      (service.deleteSpecialization as jest.Mock).mockResolvedValue(undefined);
+      (service.deleteDoctor as jest.Mock).mockResolvedValue(undefined);
 
       await controller.delete(req, res);
 
       expect(res.status).toHaveBeenCalledWith(204);
       expect(res.json).toHaveBeenCalledWith({
-        message: 'Specialization deleted',
+        message: 'Doctor deleted',
       });
     });
 
@@ -265,7 +312,7 @@ describe('SpecializationController', () => {
       const res = mockResponse();
 
       const error = new Error('Delete failed');
-      (service.deleteSpecialization as jest.Mock).mockRejectedValue(error);
+      (service.deleteDoctor as jest.Mock).mockRejectedValue(error);
 
       await controller.delete(req, res);
 

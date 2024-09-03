@@ -13,6 +13,7 @@ export class SpecializationRepository {
   async findById(id: number): Promise<Specialization | null> {
     return findByData(
       this.pool,
+      ['id', 'title'],
       'specializations',
       'id',
       id,
@@ -23,6 +24,7 @@ export class SpecializationRepository {
   async findByTitle(title: string): Promise<Specialization | null> {
     return findByData(
       this.pool,
+      ['id', 'title'],
       'specializations',
       'title',
       title,
@@ -31,7 +33,7 @@ export class SpecializationRepository {
   }
 
   async findAll(): Promise<Specialization[]> {
-    const query = `SELECT * FROM specializations`;
+    const query = `SELECT id, title FROM specializations`;
     const queryResult = await executeQuery(this.pool, query);
     return queryResult.rows.map(this.mapToSpecialization);
   }
