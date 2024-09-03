@@ -73,9 +73,7 @@ describe('AppointmentService', () => {
         null,
       );
 
-      await expect(service.findById(1)).rejects.toThrow(
-        NotFoundError,
-      );
+      await expect(service.findById(1)).rejects.toThrow(NotFoundError);
       expect(mockAppointmentRepository.findById).toHaveBeenCalledWith(1);
     });
   });
@@ -167,9 +165,9 @@ describe('AppointmentService', () => {
 
       (mockPatientRepository.findById as jest.Mock).mockResolvedValueOnce(null);
 
-      await expect(
-        service.createAppointment(createDto),
-      ).rejects.toThrow(NotFoundError);
+      await expect(service.createAppointment(createDto)).rejects.toThrow(
+        NotFoundError,
+      );
       expect(mockPatientRepository.findById).toHaveBeenCalledWith(1);
     });
 
@@ -188,9 +186,9 @@ describe('AppointmentService', () => {
       });
       (mockDoctorRepository.findById as jest.Mock).mockResolvedValueOnce(null);
 
-      await expect(
-        service.createAppointment(createDto),
-      ).rejects.toThrow(NotFoundError);
+      await expect(service.createAppointment(createDto)).rejects.toThrow(
+        NotFoundError,
+      );
       expect(mockDoctorRepository.findById).toHaveBeenCalledWith(1);
     });
 
@@ -214,9 +212,9 @@ describe('AppointmentService', () => {
         mockSpecializationRepository.findById as jest.Mock
       ).mockResolvedValueOnce(null);
 
-      await expect(
-        service.createAppointment(createDto),
-      ).rejects.toThrow(NotFoundError);
+      await expect(service.createAppointment(createDto)).rejects.toThrow(
+        NotFoundError,
+      );
       expect(mockSpecializationRepository.findById).toHaveBeenCalledWith(1);
     });
   });
@@ -276,9 +274,9 @@ describe('AppointmentService', () => {
         null,
       );
 
-      await expect(
-        service.updateAppointment(1, updateDto),
-      ).rejects.toThrow(NotFoundError);
+      await expect(service.updateAppointment(1, updateDto)).rejects.toThrow(
+        NotFoundError,
+      );
       expect(mockAppointmentRepository.findById).toHaveBeenCalledWith(1);
     });
 
@@ -297,9 +295,9 @@ describe('AppointmentService', () => {
       });
       (mockPatientRepository.findById as jest.Mock).mockResolvedValueOnce(null);
 
-      await expect(
-        service.updateAppointment(1, updateDto),
-      ).rejects.toThrow(NotFoundError);
+      await expect(service.updateAppointment(1, updateDto)).rejects.toThrow(
+        NotFoundError,
+      );
       expect(mockPatientRepository.findById).toHaveBeenCalledWith(2);
     });
 
@@ -321,9 +319,9 @@ describe('AppointmentService', () => {
       });
       (mockDoctorRepository.findById as jest.Mock).mockResolvedValueOnce(null);
 
-      await expect(
-        service.updateAppointment(1, updateDto),
-      ).rejects.toThrow(NotFoundError);
+      await expect(service.updateAppointment(1, updateDto)).rejects.toThrow(
+        NotFoundError,
+      );
       expect(mockDoctorRepository.findById).toHaveBeenCalledWith(2);
     });
 
@@ -350,9 +348,9 @@ describe('AppointmentService', () => {
         mockSpecializationRepository.findById as jest.Mock
       ).mockResolvedValueOnce(null);
 
-      await expect(
-        service.updateAppointment(1, updateDto),
-      ).rejects.toThrow(NotFoundError);
+      await expect(service.updateAppointment(1, updateDto)).rejects.toThrow(
+        NotFoundError,
+      );
       expect(mockSpecializationRepository.findById).toHaveBeenCalledWith(2);
     });
   });
@@ -377,9 +375,7 @@ describe('AppointmentService', () => {
         null,
       );
 
-      await expect(service.deleteAppointment(1)).rejects.toThrow(
-        NotFoundError,
-      );
+      await expect(service.deleteAppointment(1)).rejects.toThrow(NotFoundError);
       expect(mockAppointmentRepository.findById).toHaveBeenCalledWith(1);
     });
   });
