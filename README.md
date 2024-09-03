@@ -1734,7 +1734,7 @@ To lint project
 
 </br>
 
-For testing
+To run tests
 
 **`yarn test`**
 
