@@ -1171,6 +1171,236 @@
 
 #### 5. Endpoint: `/api/v1/auth/availabilities`
 
+* GET **Endpoint `/api/v1/auth/availabilities/:id`**
+
+  Finds availability by ID
+  
+  * The server should return a status of 200 if the availability was successfuly found
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the availability is not found
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Availability's ID</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'GET' \\\ </br>
+'/api/v1/auth/availabilities/1' \\\ </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"doctor_id": 1, </br>
+    &emsp;"available_date": "2024-10-10", </br>
+    &emsp;"available_time": "14:30", </br>
+    &emsp;"duration": 40 </br>
+} </br>
+</br>
+
+* GET **Endpoint `/api/v1/auth/availabilities/`**
+
+  Finds all availabilities
+  
+  * The server should return a status of 200 if the availabilities were successfuly returned
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+</br>
+
+**Request**
+
+
+> curl -X 'GET' \\\ </br>
+'/api/v1/auth/availabilities' \\\ </br>
+
+**Response body example** 
+
+> [{ </br>
+    &emsp;"id": 1, </br>
+    &emsp;"doctor_id": 1, </br>
+    &emsp;"available_date": "2024-10-10", </br>
+    &emsp;"available_time": "14:30", </br>
+    &emsp;"duration": 40 </br>
+} </br>
+> { </br>
+    &emsp;"id": 2, </br>
+    &emsp;"doctor_id": 1, </br>
+    &emsp;"available_date": "2024-10-10", </br>
+    &emsp;"available_time": "18:30", </br>
+    &emsp;"duration": 25 </br>
+}] </br>
+</br>
+
+* POST **Endpoint `/api/v1/auth/doctors`**
+
+  Creates a new doctor
+  
+  * The server should return a status of 201 if the doctor creation was successful
+  * The server should return a status of 400 if the doctor creation was unsuccessful
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the specialization with passed id doesnt exist
+  * The server should return a status of 409 if the doctor already exists
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>first_name</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Doctor's first name</td>
+  </tr>
+  <tr>
+    <td><code>last_name</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Doctor's last name</td>
+  </tr>
+  <tr>
+    <td><code>specialization_id</code></td>
+    <td>number</td>
+    <td>✔️</td>
+    <td>Specialization id</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'POST' \\\ </br>
+'/api/v1/auth/doctors' \\\ </br>
+ { </br>
+    &emsp;"first_name": "test", </br>
+    &emsp;"last_name": "test", </br>
+    &emsp;"specialization_id": "1", </br>
+} </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"first_name": "test", </br>
+    &emsp;"last_name": "test", </br>
+    &emsp;"specialization_id": "1", </br>
+} </br>
+</br>
+
+* PATCH **Endpoint `/api/v1/auth/doctors/:id`**
+
+  Updates doctor with passed ID
+  
+  * The server should return a status of 200 if the doctor was successfuly updated
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the specialization with passed id doesn't exist
+  * The server should return a status of 404 if the doctor with passed id doesn't exist 
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>first_name</code></td>
+    <td>string</td>
+    <td></td>
+    <td>Doctor's first name</td>
+  </tr>
+  <tr>
+    <td><code>last_name</code></td>
+    <td>string</td>
+    <td></td>
+    <td>Doctor's last name</td>
+  </tr>
+  <tr>
+    <td><code>specialization_id</code></td>
+    <td>number</td>
+    <td></td>
+    <td>Specialization id</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'PATCH' \\\ </br>
+'/api/v1/auth/doctors/1' \\\ </br>
+ { </br>
+  &emsp;"first_name": "test2", </br>
+ } </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"first_name": "test2", </br>
+    &emsp;"last_name": "test", </br>
+    &emsp;"specialization_id": "1", </br>
+} </br>
+</br>
+
+* DELETE **Endpoint `/api/v1/auth/doctors/:id`**
+
+  Deletes doctor with passed ID
+  
+  * The server should return a status of 204 if the doctor was successfuly deleted
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the doctor doesn't exist 
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Doctor's ID</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'DELETE' \\\ </br>
+'/api/v1/auth/doctors/1' \\\ </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"message": 'Doctor deleted' </br>
+} </br>
+
+</br></br>
+
 #### 6. Endpoint: `/api/v1/auth/appointments`
 
 </br>
