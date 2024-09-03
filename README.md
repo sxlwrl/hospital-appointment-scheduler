@@ -551,9 +551,9 @@
 
 <br/><br/>
 
-#### 2. Endpoint: `/api/v1/auth/patients`
+#### 2. Endpoint: `/api/v1/patients`
 
-* GET **Endpoint `/api/v1/auth/patients/:id`**
+* GET **Endpoint `/api/v1/patients/:id`**
 
   Finds patient by ID
   
@@ -596,7 +596,7 @@
 } </br>
 </br>
 
-* GET **Endpoint `/api/v1/auth/patients`**
+* GET **Endpoint `/api/v1/patients`**
 
   Finds all patients
   
@@ -631,7 +631,7 @@
 }] </br>
 </br>
 
-* PATCH **Endpoint `/api/v1/auth/patients/:id`**
+* PATCH **Endpoint `/api/v1/patients/:id`**
 
   Updates patient with passed ID
   
@@ -709,7 +709,7 @@
 } </br>
 </br>
 
-* DELETE **Endpoint `/api/v1/auth/patients/:id`**
+* DELETE **Endpoint `/api/v1/patients/:id`**
 
   Deletes patient with passed ID
   
@@ -749,9 +749,9 @@
 
 </br></br>
 
-#### 3. Endpoint: `/api/v1/auth/specializations`
+#### 3. Endpoint: `/api/v1/specializations`
 
-* GET **Endpoint /api/v1/auth/specializations/:id`**
+* GET **Endpoint `/api/v1/specializations/:id`**
 
   Finds specialization by ID
   
@@ -780,7 +780,7 @@
 
 
 > curl -X 'GET' \\\ </br>
-'/api/v1/auth/specializations/1' \\\ </br>
+'/api/v1/specializations/1' \\\ </br>
 
 **Response body example** 
 
@@ -790,7 +790,7 @@
 } </br>
 </br>
 
-* GET **Endpoint `/api/v1/auth/specializations`**
+* GET **Endpoint `/api/v1/specializations`**
 
   Finds all specializations
   
@@ -817,7 +817,7 @@
 }] </br>
 </br>
 
-* POST **Endpoint `/api/v1/auth/specializations`**
+* POST **Endpoint `/api/v1/specializations`**
 
   Creates a new specialization
   
@@ -859,7 +859,7 @@
 } </br>
 </br>
 
-* PATCH **Endpoint `/api/v1/auth/specializations/:id`**
+* PATCH **Endpoint `/api/v1/specializations/:id`**
 
   Updates specialization with passed ID
   
@@ -901,7 +901,7 @@
 } </br>
 </br>
 
-* DELETE **Endpoint `/api/v1/auth/specializations/:id`**
+* DELETE **Endpoint `/api/v1/specializations/:id`**
 
   Deletes specialization with passed ID
   
@@ -942,7 +942,7 @@
 
 #### 4. Endpoint: `/api/v1/auth/doctors`
 
-* GET **Endpoint `/api/v1/auth/doctors/:id`**
+* GET **Endpoint `/api/v1/doctors/:id`**
 
   Finds doctor by ID
   
@@ -983,7 +983,7 @@
 } </br>
 </br>
 
-* GET **Endpoint `/api/v1/auth/doctors`**
+* GET **Endpoint `/api/v1/doctors`**
 
   Finds all doctors
   
@@ -1014,7 +1014,7 @@
 }] </br>
 </br>
 
-* POST **Endpoint `/api/v1/auth/doctors`**
+* POST **Endpoint `/api/v1/doctors`**
 
   Creates a new doctor
   
@@ -1073,7 +1073,7 @@
 } </br>
 </br>
 
-* PATCH **Endpoint `/api/v1/auth/doctors/:id`**
+* PATCH **Endpoint `/api/v1/doctors/:id`**
 
   Updates doctor with passed ID
   
@@ -1130,7 +1130,7 @@
 } </br>
 </br>
 
-* DELETE **Endpoint `/api/v1/auth/doctors/:id`**
+* DELETE **Endpoint `/api/v1/doctors/:id`**
 
   Deletes doctor with passed ID
   
@@ -1169,9 +1169,9 @@
 
 </br></br>
 
-#### 5. Endpoint: `/api/v1/auth/availabilities`
+#### 5. Endpoint: `/api/v1/availabilities`
 
-* GET **Endpoint `/api/v1/auth/availabilities/:id`**
+* GET **Endpoint `/api/v1/availabilities/:id`**
 
   Finds availability by ID
   
@@ -1213,7 +1213,7 @@
 } </br>
 </br>
 
-* GET **Endpoint `/api/v1/auth/availabilities/`**
+* GET **Endpoint `/api/v1/availabilities/`**
 
   Finds all availabilities
   
@@ -1236,7 +1236,7 @@
     &emsp;"available_date": "2024-10-10", </br>
     &emsp;"available_time": "14:30", </br>
     &emsp;"duration": 40 </br>
-} </br>
+}, </br>
 > { </br>
     &emsp;"id": 2, </br>
     &emsp;"doctor_id": 1, </br>
@@ -1246,15 +1246,14 @@
 }] </br>
 </br>
 
-* POST **Endpoint `/api/v1/auth/doctors`**
+* POST **Endpoint `/api/v1/availabilities/`**
 
-  Creates a new doctor
+  Creates a new availability
   
-  * The server should return a status of 201 if the doctor creation was successful
-  * The server should return a status of 400 if the doctor creation was unsuccessful
+  * The server should return a status of 201 if the availability creation was successful
+  * The server should return a status of 400 if the availability creation was unsuccessful
   * The server should return a status of 401 if the patient is not logged in
-  * The server should return a status of 404 if the specialization with passed id doesnt exist
-  * The server should return a status of 409 if the doctor already exists
+  * The server should return a status of 404 if the doctor with passed id doesnt exist
 </br>
 <table>
   <tr>
@@ -1264,22 +1263,28 @@
     <td>Description</td>
   </tr>
   <tr>
-    <td><code>first_name</code></td>
-    <td>string</td>
-    <td>✔️</td>
-    <td>Doctor's first name</td>
-  </tr>
-  <tr>
-    <td><code>last_name</code></td>
-    <td>string</td>
-    <td>✔️</td>
-    <td>Doctor's last name</td>
-  </tr>
-  <tr>
-    <td><code>specialization_id</code></td>
+    <td><code>doctor_id</code></td>
     <td>number</td>
     <td>✔️</td>
-    <td>Specialization id</td>
+    <td>Doctor's ID</td>
+  </tr>
+  <tr>
+    <td><code>available_date</code></td>
+    <td>date</td>
+    <td>✔️</td>
+    <td>Available date</td>
+  </tr>
+  <tr>
+    <td><code>available_time</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Available time</td>
+  </tr>
+  <tr>
+    <td><code>duration</code></td>
+    <td>number</td>
+    <td>✔️</td>
+    <td>Duration in min</td>
   </tr>
 </table>
 </br>
@@ -1288,32 +1293,34 @@
 
 
 > curl -X 'POST' \\\ </br>
-'/api/v1/auth/doctors' \\\ </br>
+'/api/v1/availabilities' \\\ </br>
  { </br>
-    &emsp;"first_name": "test", </br>
-    &emsp;"last_name": "test", </br>
-    &emsp;"specialization_id": "1", </br>
+    &emsp;"doctor_id": 1, </br>
+    &emsp;"available_date": "2024-10-10", </br>
+    &emsp;"available_time": "14:30", </br>
+    &emsp;"duration": 50 </br>
 } </br>
 
 **Response body example** 
 
 > { </br>
     &emsp;"id": 1, </br>
-    &emsp;"first_name": "test", </br>
-    &emsp;"last_name": "test", </br>
-    &emsp;"specialization_id": "1", </br>
+    &emsp;"doctor_id": 1, </br>
+    &emsp;"available_date": "2024-10-10", </br>
+    &emsp;"available_time": "14:30", </br>
+    &emsp;"duration": 50 </br>
 } </br>
 </br>
 
-* PATCH **Endpoint `/api/v1/auth/doctors/:id`**
+* PATCH **Endpoint `/api/v1/availabilities/:id`**
 
-  Updates doctor with passed ID
+  Updates availability with passed ID
   
-  * The server should return a status of 200 if the doctor was successfuly updated
+  * The server should return a status of 200 if the availability was successfuly updated
   * The server should return a status of 400 if any other errors occurred
   * The server should return a status of 401 if the patient is not logged in
-  * The server should return a status of 404 if the specialization with passed id doesn't exist
-  * The server should return a status of 404 if the doctor with passed id doesn't exist 
+  * The server should return a status of 404 if the doctor with passed id doesn't exist
+  * The server should return a status of 404 if the availability with passed id doesn't exist 
 </br>
 <table>
   <tr>
@@ -1347,7 +1354,7 @@
 
 
 > curl -X 'PATCH' \\\ </br>
-'/api/v1/auth/doctors/1' \\\ </br>
+'/api/v1/availabilities/1' \\\ </br>
  { </br>
   &emsp;"first_name": "test2", </br>
  } </br>
@@ -1362,14 +1369,14 @@
 } </br>
 </br>
 
-* DELETE **Endpoint `/api/v1/auth/doctors/:id`**
+* DELETE **Endpoint `/api/v1/availabilities/:id`**
 
-  Deletes doctor with passed ID
+  Deletes availability with passed ID
   
-  * The server should return a status of 204 if the doctor was successfuly deleted
+  * The server should return a status of 204 if the availability was successfuly deleted
   * The server should return a status of 400 if any other errors occurred
   * The server should return a status of 401 if the patient is not logged in
-  * The server should return a status of 404 if the doctor doesn't exist 
+  * The server should return a status of 404 if the availability doesn't exist 
 </br>
 <table>
   <tr>
@@ -1391,17 +1398,17 @@
 
 
 > curl -X 'DELETE' \\\ </br>
-'/api/v1/auth/doctors/1' \\\ </br>
+'/api/v1/availabilities/1' \\\ </br>
 
 **Response body example** 
 
 > { </br>
-    &emsp;"message": 'Doctor deleted' </br>
+    &emsp;"message": 'Availability deleted' </br>
 } </br>
 
 </br></br>
 
-#### 6. Endpoint: `/api/v1/auth/appointments`
+#### 6. Endpoint: `/api/v1/appointments`
 
 </br>
 
