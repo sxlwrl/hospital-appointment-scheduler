@@ -1417,9 +1417,296 @@
 
 #### 6. Endpoint: `/api/v1/appointments`
 
+* GET **Endpoint `/api/v1/appointments/:id`**
+
+  Finds appointment by ID
+  
+  * The server should return a status of 200 if the appointment was successfuly found
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the appointment is not found
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Appointment's ID</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'GET' \\\ </br>
+'/api/v1/appointments/1' \\\ </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"patient_id": 1, </br>
+    &emsp;"doctor_id": 1, </br>
+    &emsp;"specialization_id": 1, </br>
+    &emsp;"appointment_date": "2024-10-10", </br>
+    &emsp;"appointment_time": "14:30", </br>
+    &emsp;"duration": 20 </br>
+} </br>
+</br>
+
+* GET **Endpoint `/api/v1/appointments/`**
+
+  Finds all appointments
+  
+  * The server should return a status of 200 if the appointments were successfuly returned
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+</br>
+
+**Request**
+
+
+> curl -X 'GET' \\\ </br>
+'/api/v1/appointments' \\\ </br>
+
+**Response body example** 
+
+> [{ </br>
+    &emsp;"id": 1, </br>
+    &emsp;"patient_id": 1, </br>
+    &emsp;"doctor_id": 1, </br>
+    &emsp;"specialization_id": 1, </br>
+    &emsp;"appointment_date": "2024-10-10", </br>
+    &emsp;"appointment_time": "14:30", </br>
+    &emsp;"duration": 20 </br>
+}, </br>
+> { </br>
+    &emsp;"id": 2, </br>
+    &emsp;"patient_id": 2, </br>
+    &emsp;"doctor_id": 2, </br>
+    &emsp;"specialization_id": 2, </br>
+    &emsp;"appointment_date": "2024-10-10", </br>
+    &emsp;"appointment_time": "17:30", </br>
+    &emsp;"duration": 30 </br>
+}] </br>
+</br>
+
+* POST **Endpoint `/api/v1/appointments/`**
+
+  Creates a new appointment
+  
+  * The server should return a status of 201 if the appointment creation was successful
+  * The server should return a status of 400 if the appointment creation was unsuccessful
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the patient with passed id doesnt exist
+  * The server should return a status of 404 if the doctor with passed id doesnt exist
+  * The server should return a status of 404 if the specialization with passed id doesnt exist
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>patient_id</code></td>
+    <td>number</td>
+    <td>✔️</td>
+    <td>Patient's ID</td>
+  </tr>
+  <tr>
+    <td><code>doctor_id</code></td>
+    <td>number</td>
+    <td>✔️</td>
+    <td>Doctor's ID</td>
+  </tr>
+  <tr>
+    <td><code>specialization_id</code></td>
+    <td>number</td>
+    <td>✔️</td>
+    <td>Specialization's ID</td>
+  </tr>
+  <tr>
+    <td><code>appointment_date</code></td>
+    <td>date</td>
+    <td>✔️</td>
+    <td>Appointment date</td>
+  </tr>
+  <tr>
+    <td><code>appointment_time</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Appointment time</td>
+  </tr>
+  <tr>
+    <td><code>duration</code></td>
+    <td>number</td>
+    <td>✔️</td>
+    <td>Duration in min</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'POST' \\\ </br>
+'/api/v1/appointments' \\\ </br>
+ { </br>
+    &emsp;"patient_id": 1, </br>
+    &emsp;"doctor_id": 1, </br>
+    &emsp;"specialization_id": 1, </br>
+    &emsp;"appointment_date": "2024-10-10", </br>
+    &emsp;"appointment_time": "14:30", </br>
+    &emsp;"duration": 50 </br>
+} </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"patient_id": 1, </br>
+    &emsp;"doctor_id": 1, </br>
+    &emsp;"specialization_id": 1, </br>
+    &emsp;"appointment_date": "2024-10-10", </br>
+    &emsp;"appointment_time": "14:30", </br>
+    &emsp;"duration": 50 </br>
+} </br>
+</br>
+
+* PATCH **Endpoint `/api/v1/appointments/:id`**
+
+  Updates appointment with passed ID
+  
+  * The server should return a status of 200 if the appointment was successfuly updated
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the patient with passed id doesnt exist
+  * The server should return a status of 404 if the doctor with passed id doesnt exist
+  * The server should return a status of 404 if the specialization with passed id doesnt exist
+  * The server should return a status of 404 if the appointment with passed id doesn't exist 
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>patient_id</code></td>
+    <td>number</td>
+    <td></td>
+    <td>Patient's ID</td>
+  </tr>
+  <tr>
+    <td><code>doctor_id</code></td>
+    <td>number</td>
+    <td></td>
+    <td>Doctor's ID</td>
+  </tr>
+  <tr>
+    <td><code>specialization_id</code></td>
+    <td>number</td>
+    <td></td>
+    <td>Specialization's ID</td>
+  </tr>
+  <tr>
+    <td><code>appointment_date</code></td>
+    <td>date</td>
+    <td></td>
+    <td>Appointment date</td>
+  </tr>
+  <tr>
+    <td><code>appointment_time</code></td>
+    <td>string</td>
+    <td></td>
+    <td>Appointment time</td>
+  </tr>
+  <tr>
+    <td><code>duration</code></td>
+    <td>number</td>
+    <td></td>
+    <td>Duration in min</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'PATCH' \\\ </br>
+'/api/v1/appointments/1' \\\ </br>
+ { </br>
+  &emsp;"doctor_id": 2, </br>
+  &emsp;"specialization_id": 2, </br>
+ } </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"patient_id": 1, </br>
+    &emsp;"doctor_id": 2, </br>
+    &emsp;"specialization_id": 2, </br>
+    &emsp;"appointment_date": "2024-10-10", </br>
+    &emsp;"appointment_time": "14:30", </br>
+    &emsp;"duration": 50 </br>
+} </br>
+</br>
+
+* DELETE **Endpoint `/api/v1/appointments/:id`**
+
+  Deletes appointment with passed ID
+  
+  * The server should return a status of 204 if the appointment was successfuly deleted
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the appointment doesn't exist 
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Appointment's ID</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'DELETE' \\\ </br>
+'/api/v1/appointments/1' \\\ </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"message": 'Appointment deleted' </br>
+} </br>
+
+</br></br>
+
 </br>
 
 ## 🚀 How To Install And Run The Project
+
+</br>
 
 ## 🐋 How To Dockerize The Project
 
