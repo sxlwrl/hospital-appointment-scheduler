@@ -466,11 +466,11 @@
 > curl -X 'POST' \\\ </br>
 '/api/v1/auth/register' \\\ </br>
  { </br>
-  &emsp;"username": "username", </br>
-  &emsp;"firstName": "firstName", </br>
-  &emsp;"lastName": "lastName", </br>
-   &emsp;"email": "email", </br>
-   &emsp;"password": "password" </br>
+  &emsp;"username": "test", </br>
+  &emsp;"firstName": "test", </br>
+  &emsp;"lastName": "test", </br>
+   &emsp;"email": "test@gmail.com", </br>
+   &emsp;"password": "123456" </br>
  } </br>
 
 **Response body example** 
@@ -518,7 +518,7 @@
 > curl -X 'POST' \\\ </br>
 '/api/v1/auth/login' \\\ </br>
  { </br>
-  &emsp;"username": "username", </br>
+  &emsp;"username": "test", </br>
    &emsp;"password": "password" </br>
  } </br>
 
@@ -633,7 +633,7 @@
 
 * PATCH **Endpoint `/api/v1/auth/patients/:id`**
 
-  Updates patient that has passed ID
+  Updates patient with passed ID
   
   * The server should return a status of 200 if the patient was successfuly updated
   * The server should return a status of 400 if any other errors occurred
@@ -693,8 +693,8 @@
 > curl -X 'PATCH' \\\ </br>
 '/api/v1/auth/patients/1' \\\ </br>
  { </br>
-  &emsp;"username": "username", </br>
-   &emsp;"email": "email", </br>
+  &emsp;"username": "test3", </br>
+   &emsp;"email": "test3@gmail.com", </br>
  } </br>
 
 **Response body example** 
@@ -711,7 +711,7 @@
 
 * DELETE **Endpoint `/api/v1/auth/patients/:id`**
 
-  Deletes patient that has passed ID
+  Deletes patient with passed ID
   
   * The server should return a status of 204 if the patient was successfuly deleted
   * The server should return a status of 400 if any other errors occurred
@@ -750,6 +750,195 @@
 </br></br>
 
 #### 3. Endpoint: `/api/v1/auth/specializations`
+
+* GET **Endpoint /api/v1/auth/specializations/:id`**
+
+  Finds specialization by ID
+  
+  * The server should return a status of 200 if the specialization was successfuly found
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the specialization is not found
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Specialization's ID</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'GET' \\\ </br>
+'/api/v1/auth/specializations/1' \\\ </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"title": "test", </br>
+} </br>
+</br>
+
+* GET **Endpoint `/api/v1/auth/specializations`**
+
+  Finds all specializations
+  
+  * The server should return a status of 200 if the specializations were successfuly returned
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+</br>
+
+**Request**
+
+
+> curl -X 'GET' \\\ </br>
+'/api/v1/auth/specializations' \\\ </br>
+
+**Response body example** 
+
+> [{ </br>
+    &emsp;"id": 1, </br>
+    &emsp;"title": "test", </br>
+}, <br/>
+> { </br>
+    &emsp;"id": 2, </br>
+    &emsp;"title": "test2", </br>
+}] </br>
+</br>
+
+* POST **Endpoint `/api/v1/auth/specializations`**
+
+  Creates a new specialization
+  
+  * The server should return a status of 201 if the specialization creation was successful
+  * The server should return a status of 400 if the specialization creation was unsuccessful
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 409 if the specialization already exists
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>title</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Specialization title</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'POST' \\\ </br>
+'/api/v1/auth/specializations' \\\ </br>
+ { </br>
+  &emsp;"title": "test", </br>
+ } </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"title": "test", </br>
+} </br>
+</br>
+
+* PATCH **Endpoint `/api/v1/auth/specializations/:id`**
+
+  Updates specialization with passed ID
+  
+  * The server should return a status of 200 if the specialization was successfuly updated
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the specialization doesn't exist 
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>title</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Specialization title</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'PATCH' \\\ </br>
+'/api/v1/auth/specializations/1' \\\ </br>
+ { </br>
+  &emsp;"title": "test2", </br>
+ } </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"id": 1, </br>
+    &emsp;"title": "test2", </br>
+} </br>
+</br>
+
+* DELETE **Endpoint `/api/v1/auth/specializations/:id`**
+
+  Deletes specialization with passed ID
+  
+  * The server should return a status of 204 if the specialization was successfuly deleted
+  * The server should return a status of 400 if any other errors occurred
+  * The server should return a status of 401 if the patient is not logged in
+  * The server should return a status of 404 if the specialization doesn't exist 
+</br>
+<table>
+  <tr>
+    <td>Parameter</td>
+    <td>Type</td>
+    <td>Required</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td>string</td>
+    <td>✔️</td>
+    <td>Specialization's ID</td>
+  </tr>
+</table>
+</br>
+
+**Request**
+
+
+> curl -X 'DELETE' \\\ </br>
+'/api/v1/auth/specializations/1' \\\ </br>
+
+**Response body example** 
+
+> { </br>
+    &emsp;"message": 'Specialization deleted' </br>
+} </br>
+
+</br></br>
 
 #### 4. Endpoint: `/api/v1/auth/doctors`
 
