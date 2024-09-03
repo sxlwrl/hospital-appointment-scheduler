@@ -57,6 +57,7 @@ describe('SpecializationService', () => {
         new Specialization(1, 'Surgery'),
         new Specialization(2, 'Neurology'),
       ];
+
       (mockSpecializationRepository.findAll as jest.Mock).mockResolvedValueOnce(
         specializations,
       );

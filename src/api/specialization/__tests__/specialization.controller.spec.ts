@@ -162,7 +162,7 @@ describe('SpecializationController', () => {
       const validationErrors = [
         {
           property: 'title',
-          constraints: { isNotEmpty: 'Should not be empty' },
+          constraints: { isNotEmpty: 'Title should not be empty' },
         },
       ];
       (validate as jest.Mock).mockResolvedValue(validationErrors);
@@ -217,7 +217,7 @@ describe('SpecializationController', () => {
       const validationErrors = [
         {
           property: 'title',
-          constraints: { isNotEmpty: 'Should not be empty' },
+          constraints: { isNotEmpty: 'Title should not be empty' },
         },
       ];
       (validate as jest.Mock).mockResolvedValue(validationErrors);
